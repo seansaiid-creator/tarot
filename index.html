@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>별의 타로 — 오늘의 운세</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0612;
+    --surface: #120d1e;
+    --card-bg: #1a1130;
+    --border: rgba(180,140,255,0.2);
+    --gold: #c9a84c;
+    --gold-light: #f0d080;
+    --purple: #9b7de8;
+    --purple-light: #c4a8ff;
+    --text: #e8e0f5;
+    --muted: #9080b0;
+    --accent: #e8c5ff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Serif KR', serif;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(120,60,200,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(60,20,120,0.2) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--dur, 3s) ease-in-out infinite;
+    opacity: var(--op, 0.5);
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: var(--op, 0.5); transform: scale(1); }
+    50% { opacity: 0.1; transform: scale(0.5); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  /* ── Header ── */
+  header {
+    text-align: center;
+    padding: 40px 0 30px;
+  }
+
+  .logo {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.8;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--accent);
+    letter-spacing: 2px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  .divider-star { color: var(--gold); font-size: 16px; }
+
+  /* ── 주제 선택 ── */
+  .topic-section { margin-bottom: 28px; }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .topic-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'Noto Serif KR', serif;
+  }
+
+  .topic-btn .icon {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .topic-btn:hover {
+    border-color: var(--purple);
+    color: var(--purple-light);
+    background: rgba(155,125,232,0.1);
+    transform: translateY(-2px);
+  }
+
+  .topic-btn.active {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    background: rgba(201,168,76,0.1);
+    box-shadow: 0 0 20px rgba(201,168,76,0.1);
+    transform: translateY(-2px);
+  }
+
+  /* ── 카드 뽑기 ── */
+  .draw-section { margin-bottom: 32px; }
+
+  .cards-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 20px 0;
+    perspective: 1000px;
+  }
+
+  .card-slot {
+    width: 90px;
+    height: 150px;
+    position: relative;
+  }
+
+  .card-slot-label {
+    text-align: center;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-top: 6px;
+  }
+
+  .tarot-card {
+    width: 90px;
+    height: 150px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    border-radius: 10px;
+  }
+
+  .tarot-card.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .card-face,
+  .card-back {
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-back {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .card-back-pattern {
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(155,125,232,0.3);
+    border-radius: 7px;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 4px,
+      rgba(155,125,232,0.05) 4px,
+      rgba(155,125,232,0.05) 8px
+    );
+  }
+
+  .card-back-center {
+    font-size: 28px;
+    z-index: 1;
+  }
+
+  .card-face {
+    background: linear-gradient(135deg, var(--card-bg) 0%, #1f1540 100%);
+    border: 1px solid var(--gold);
+    transform: rotateY(180deg);
+    flex-direction: column;
+    padding: 8px;
+    text-align: center;
+  }
+
+  .card-face .card-emoji { font-size: 32px; margin-bottom: 4px; }
+
+  .card-face .card-name {
+    font-size: 9px;
+    color: var(--gold-light);
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    font-family: 'Noto Serif KR', serif;
+  }
+
+  .card-face .card-number {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* floating animation */
+  .card-slot.waiting .tarot-card {
+    animation: float var(--float-delay, 3s) ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .card-slot.waiting .tarot-card:hover {
+    box-shadow: 0 0 30px rgba(155,125,232,0.4);
+    animation: none;
+    transform: translateY(-4px) scale(1.03);
+  }
+
+  .card-slot.selected .tarot-card {
+    animation: none;
+    box-shadow: 0 0 25px rgba(201,168,76,0.3);
+  }
+
+  /* ── 뽑기 버튼 ── */
+  .draw-btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(155,125,232,0.15), rgba(201,168,76,0.15));
+    border: 1px solid var(--gold);
+    border-radius: 50px;
+    color: var(--gold-light);
+    font-size: 15px;
+    font-family: 'Noto Serif KR', serif;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .draw-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(155,125,232,0.1));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .draw-btn:hover::before { opacity: 1; }
+
+  .draw-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(201,168,76,0.2);
+  }
+
+  .draw-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ── 결과 섹션 ── */
+  .result-section {
+    display: none;
+    animation: fadeUp 0.8s ease forwards;
+  }
+
+  .result-section.visible { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-cards-summary {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .result-card-chip {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    color: var(--gold-light);
+  }
+
+  .reading-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .reading-box::before {
+    content: '✦';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface);
+    padding: 0 8px;
+    color: var(--gold);
+    font-size: 14px;
+  }
+
+  .reading-topic-badge {
+    display: inline-block;
+    background: rgba(155,125,232,0.15);
+    border: 1px solid rgba(155,125,232,0.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 11px;
+    color: var(--purple-light);
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  .reading-text {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text);
+    white-space: pre-line;
+    min-height: 60px;
+  }
+
+  /* 로딩 dots */
+  .loading-dots {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .loading-dots span {
+    width: 6px;
+    height: 6px;
+    background: var(--purple);
+    border-radius: 50%;
+    animation: bounce 1.2s ease-in-out infinite;
+  }
+
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+
+  /* ── 공유 버튼 ── */
+  .share-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .share-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 13px;
+    font-family: 'Noto Serif KR', serif;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+  }
+
+  .share-btn:hover {
+    border-color: var(--purple);
+    color: var(--purple-light);
+    background: rgba(155,125,232,0.08);
+  }
+
+  .kakao-btn {
+    background: #FEE500;
+    border-color: #FEE500;
+    color: #3A1D1D;
+    font-weight: 700;
+  }
+
+  .kakao-btn:hover {
+    background: #FFD900;
+    border-color: #FFD900;
+    color: #3A1D1D;
+  }
+
+  .retry-btn {
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    color: var(--muted);
+    font-size: 13px;
+    font-family: 'Noto Serif KR', serif;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .retry-btn:hover {
+    border-color: var(--purple-light);
+    color: var(--purple-light);
+  }
+
+  /* ── 하단 링크 ── */
+  .footer-links {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-title {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .service-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .service-link {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    transition: all 0.3s;
+  }
+
+  .service-link:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* ── 반응형 ── */
+  @media (max-width: 360px) {
+    .topic-grid { grid-template-columns: repeat(2, 1fr); }
+    .cards-row { gap: 10px; }
+    .card-slot { width: 80px; height: 135px; }
+    .tarot-card { width: 80px; height: 135px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div class="logo">★ Byeol Tarot ★</div>
+    <h1>별의 타로</h1>
+    <div class="subtitle">오늘 당신의 운명은 무엇을 말하나요</div>
+  </header>
+
+  <div class="divider"><span class="divider-star">✦</span></div>
+
+  <!-- 주제 선택 -->
+  <div class="topic-section">
+    <div class="section-label">주제를 선택하세요</div>
+    <div class="topic-grid">
+      <button class="topic-btn active" data-topic="오늘의 운세">
+        <span class="icon">🌟</span>오늘의 운세
+      </button>
+      <button class="topic-btn" data-topic="연애운">
+        <span class="icon">💕</span>연애운
+      </button>
+      <button class="topic-btn" data-topic="직업운">
+        <span class="icon">💼</span>직업운
+      </button>
+      <button class="topic-btn" data-topic="금전운">
+        <span class="icon">💰</span>금전운
+      </button>
+      <button class="topic-btn" data-topic="건강운">
+        <span class="icon">🌿</span>건강운
+      </button>
+      <button class="topic-btn" data-topic="인간관계">
+        <span class="icon">🤝</span>인간관계
+      </button>
+    </div>
+  </div>
+
+  <!-- 카드 뽑기 영역 -->
+  <div class="draw-section" id="drawSection">
+    <div class="section-label">카드를 뽑아주세요</div>
+    <div class="cards-row" id="cardsRow"></div>
+    <button class="draw-btn" id="drawBtn" onclick="drawCards()">✦ 카드 뽑기 ✦</button>
+  </div>
+
+  <!-- 결과 섹션 -->
+  <div class="result-section" id="resultSection">
+    <div class="result-cards-summary" id="resultSummary"></div>
+    <div class="reading-box">
+      <div class="reading-topic-badge" id="resultTopic"></div>
+      <div class="reading-text" id="readingText">
+        <div class="loading-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+    <div class="share-row">
+      <button class="share-btn kakao-btn" onclick="shareKakao()">카카오 공유</button>
+      <button class="share-btn" onclick="saveImage()">이미지 저장</button>
+    </div>
+    <button class="retry-btn" onclick="resetApp()">↺ 다시 뽑기</button>
+  </div>
+
+  <!-- 하단 서비스 링크 -->
+  <div class="footer-links">
+    <div class="footer-title">운세 시리즈</div>
+    <div class="service-links">
+      <a href="https://sajulucky.vercel.app" class="service-link" target="_blank">🔮 사주행운</a>
+      <a href="https://dreams-come-true-ten.vercel.app" class="service-link" target="_blank">🌙 꿈해몽</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- 카카오 SDK (실제 배포 시 활성화) -->
+<!-- <script src="https://developers.kakao.com/sdk/js/kakao.js"></script> -->
+
+<script>
+// ══════════════════════════════════════════
+//  ⚙️  설정 — 배포 전 여기에 API 키 입력
+// ══════════════════════════════════════════
+const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY'; // ← Gemini API 키 입력
+const KAKAO_APP_KEY  = '7b87b3bb674e9bec0fd123f31a4e6e24';
+
+// ══════════════════════════════════════════
+//  타로 카드 데이터 (메이저 아르카나 22장)
+// ══════════════════════════════════════════
+const TAROT_CARDS = [
+  { name: '광대',           number: '0',    emoji: '🃏', meaning: '새로운 시작, 자유로운 영혼, 순수한 에너지' },
+  { name: '마법사',         number: 'I',    emoji: '🌟', meaning: '의지, 실력, 창조적 능력' },
+  { name: '여교황',         number: 'II',   emoji: '📖', meaning: '직관, 신비, 내면의 지혜' },
+  { name: '여황제',         number: 'III',  emoji: '🌺', meaning: '풍요, 창조, 모성적 에너지' },
+  { name: '황제',           number: 'IV',   emoji: '👑', meaning: '권위, 안정, 리더십' },
+  { name: '교황',           number: 'V',    emoji: '🕊️', meaning: '전통, 조언, 정신적 가이드' },
+  { name: '연인',           number: 'VI',   emoji: '💑', meaning: '사랑, 선택, 조화로운 결합' },
+  { name: '전차',           number: 'VII',  emoji: '⚡', meaning: '승리, 의지력, 전진' },
+  { name: '힘',             number: 'VIII', emoji: '🦁', meaning: '내면의 힘, 용기, 인내' },
+  { name: '은자',           number: 'IX',   emoji: '🔦', meaning: '성찰, 고독, 내면 탐구' },
+  { name: '운명의 수레바퀴', number: 'X',   emoji: '🎡', meaning: '운명, 전환점, 기회' },
+  { name: '정의',           number: 'XI',   emoji: '⚖️', meaning: '균형, 공정, 진실' },
+  { name: '매달린 사람',    number: 'XII',  emoji: '🌀', meaning: '희생, 새로운 시각, 수용' },
+  { name: '죽음',           number: 'XIII', emoji: '🌙', meaning: '변화, 끝과 시작, 전환' },
+  { name: '절제',           number: 'XIV',  emoji: '🌊', meaning: '균형, 조화, 인내' },
+  { name: '악마',           number: 'XV',   emoji: '🔗', meaning: '집착, 물질주의, 해방의 필요성' },
+  { name: '탑',             number: 'XVI',  emoji: '⛈️', meaning: '갑작스런 변화, 혼란, 계시' },
+  { name: '별',             number: 'XVII', emoji: '⭐', meaning: '희망, 영감, 새로운 기회' },
+  { name: '달',             number: 'XVIII',emoji: '🌕', meaning: '직관, 꿈, 숨겨진 진실' },
+  { name: '태양',           number: 'XIX',  emoji: '☀️', meaning: '기쁨, 성공, 활력' },
+  { name: '심판',           number: 'XX',   emoji: '🎺', meaning: '깨달음, 부활, 새로운 부름' },
+  { name: '세계',           number: 'XXI',  emoji: '🌍', meaning: '완성, 통합, 성취' }
+];
+
+// Fallback 풀이 (API 없어도 동작)
+const FALLBACK_READINGS = {
+  '오늘의 운세': (cards) => `${cards[0].name}의 에너지가 당신의 과거를 밝혀줍니다. 지금 이 순간, ${cards[1].name}이 당신 곁에 있어 든든한 힘이 되어주고 있어요. 앞으로는 ${cards[2].name}의 기운이 펼쳐지며 기대 이상의 결과를 가져다줄 거예요 ✨\n\n오늘 하루, 당신의 직관을 믿어보세요.`,
+  '연애운':     (cards) => `${cards[0].name}이 보여주는 과거의 흔적 위에, 현재는 ${cards[1].name}의 기운으로 가득해요. 마음 속 감정에 솔직해질 때가 왔습니다. ${cards[2].name}이 예고하는 미래엔 진심이 통하는 인연이 기다리고 있어요 💕\n\n조금만 용기를 내보세요.`,
+  '직업운':     (cards) => `${cards[0].name}을 거쳐 온 당신, 이제 ${cards[1].name}의 힘으로 역량이 빛나고 있어요. ${cards[2].name}이 가리키는 방향으로 한 걸음씩 나아가면 분명한 성과가 찾아올 거예요 💼\n\n꾸준함이 당신의 가장 큰 무기입니다.`,
+  '금전운':     (cards) => `${cards[0].name}의 교훈을 발판으로, ${cards[1].name}이 새로운 기회를 알려주고 있어요. ${cards[2].name}의 에너지는 예상치 못한 곳에서 행운이 올 수 있음을 암시해요 💰\n\n무리한 욕심보다 꾸준한 노력이 더 빛날 때입니다.`,
+  '건강운':     (cards) => `${cards[0].name}을 지나온 몸과 마음, 지금은 ${cards[1].name}의 회복 에너지가 흐르고 있어요. ${cards[2].name}이 말하듯 자신을 먼저 돌보는 시간이 필요해요 🌿\n\n작은 휴식이 큰 활력으로 돌아올 거예요.`,
+  '인간관계':   (cards) => `${cards[0].name}을 통해 배운 소중한 인연, 지금은 ${cards[1].name}의 따뜻한 기운으로 주변과 연결되어 있어요. ${cards[2].name}이 예고하는 미래엔 진정한 이해와 신뢰가 깊어질 거예요 🤝\n\n먼저 마음을 열어보는 건 어떨까요?`
+};
+
+// ══════════════════════════════════════════
+//  앱 상태
+// ══════════════════════════════════════════
+let selectedTopic = '오늘의 운세';
+let drawnCards = [];
+let isDrawn = false;
+
+// ══════════════════════════════════════════
+//  별 생성
+// ══════════════════════════════════════════
+function createStars() {
+  const container = document.getElementById('stars');
+  for (let i = 0; i < 90; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = Math.random() < 0.8 ? 2 : 3;
+    star.style.cssText = `
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      --dur: ${2 + Math.random() * 4}s;
+      --op: ${0.2 + Math.random() * 0.6};
+      width: ${size}px;
+      height: ${size}px;
+      animation-delay: ${Math.random() * 4}s;
+    `;
+    container.appendChild(star);
+  }
+}
+
+// ══════════════════════════════════════════
+//  카드 초기화
+// ══════════════════════════════════════════
+function initCards() {
+  const row = document.getElementById('cardsRow');
+  row.innerHTML = '';
+  drawnCards = [];
+
+  const labels = ['과거', '현재', '미래'];
+  for (let i = 0; i < 3; i++) {
+    const slot = document.createElement('div');
+    slot.className = 'card-slot waiting';
+    slot.id = `slot${i}`;
+    slot.style.setProperty('--float-delay', `${2 + i * 0.8}s`);
+
+    slot.innerHTML = `
+      <div class="tarot-card" id="card${i}">
+        <div class="card-back">
+          <div class="card-back-pattern"></div>
+          <div class="card-back-center">🌙</div>
+        </div>
+        <div class="card-face" id="cardFace${i}">
+          <div class="card-emoji">✦</div>
+          <div class="card-name">...</div>
+          <div class="card-number">·</div>
+        </div>
+      </div>
+      <div class="card-slot-label">${labels[i]}</div>
+    `;
+    row.appendChild(slot);
+  }
+}
+
+// ══════════════════════════════════════════
+//  주제 버튼 이벤트
+// ══════════════════════════════════════════
+document.querySelectorAll('.topic-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (isDrawn) return;
+    document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedTopic = btn.dataset.topic;
+  });
+});
+
+// ══════════════════════════════════════════
+//  카드 뽑기
+// ══════════════════════════════════════════
+function shuffleAndPick(n) {
+  return [...TAROT_CARDS].sort(() => Math.random() - 0.5).slice(0, n);
+}
+
+function drawCards() {
+  if (isDrawn) return;
+  isDrawn = true;
+
+  drawnCards = shuffleAndPick(3);
+
+  const btn = document.getElementById('drawBtn');
+  btn.disabled = true;
+  btn.textContent = '✦ 카드가 말을 건네고 있어요... ✦';
+
+  drawnCards.forEach((card, i) => {
+    setTimeout(() => {
+      const face = document.getElementById(`cardFace${i}`);
+      face.querySelector('.card-emoji').textContent = card.emoji;
+      face.querySelector('.card-name').textContent = card.name;
+      face.querySelector('.card-number').textContent = card.number;
+
+      const cardEl = document.getElementById(`card${i}`);
+      const slotEl = document.getElementById(`slot${i}`);
+      cardEl.classList.add('flipped');
+      slotEl.classList.remove('waiting');
+      slotEl.classList.add('selected');
+    }, i * 700);
+  });
+
+  setTimeout(() => showResult(), 3000);
+}
+
+// ══════════════════════════════════════════
+//  결과 표시 + AI 풀이
+// ══════════════════════════════════════════
+async function showResult() {
+  document.getElementById('drawSection').style.display = 'none';
+
+  const rs = document.getElementById('resultSection');
+  rs.classList.add('visible');
+  document.getElementById('resultTopic').textContent = `✦ ${selectedTopic} 풀이`;
+
+  // 뽑은 카드 요약 칩
+  const summary = document.getElementById('resultSummary');
+  summary.innerHTML = drawnCards.map(c =>
+    `<div class="result-card-chip">${c.emoji} ${c.name}</div>`
+  ).join('');
+
+  // 로딩 표시
+  const readingEl = document.getElementById('readingText');
+  readingEl.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
+
+  // Gemini API 호출
+  if (GEMINI_API_KEY && GEMINI_API_KEY !== 'YOUR_GEMINI_API_KEY') {
+    try {
+      const prompt = `당신은 신비롭고 따뜻한 타로 마스터입니다. MZ세대(20대)를 위한 현대적이고 공감가는 언어로 타로 풀이를 해주세요.
+
+주제: ${selectedTopic}
+뽑은 카드:
+- 과거: ${drawnCards[0].name} (${drawnCards[0].meaning})
+- 현재: ${drawnCards[1].name} (${drawnCards[1].meaning})
+- 미래: ${drawnCards[2].name} (${drawnCards[2].meaning})
+
+세 카드의 흐름을 바탕으로 ${selectedTopic}에 대한 풀이를 150자 내외로 작성해주세요.
+신비롭고 시적이면서도 MZ세대가 공감할 수 있는 톤으로, 희망적이고 따뜻하게 마무리해 주세요.
+이모지를 2~3개 사용해도 좋습니다.`;
+
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { maxOutputTokens: 400, temperature: 0.9 }
+          })
+        }
+      );
+
+      if (!res.ok) throw new Error(`API error: ${res.status}`);
+      const data = await res.json();
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!text) throw new Error('No content');
+
+      readingEl.textContent = text;
+      return;
+
+    } catch (err) {
+      console.warn('Gemini API 실패, fallback 사용:', err.message);
+    }
+  }
+
+  // Fallback
+  const fallbackFn = FALLBACK_READINGS[selectedTopic] || FALLBACK_READINGS['오늘의 운세'];
+  readingEl.textContent = fallbackFn(drawnCards);
+}
+
+// ══════════════════════════════════════════
+//  카카오 공유
+// ══════════════════════════════════════════
+function shareKakao() {
+  // 카카오 SDK가 로드된 경우
+  if (window.Kakao) {
+    if (!Kakao.isInitialized()) {
+      Kakao.init(KAKAO_APP_KEY);
+    }
+    Kakao.Share.sendDefault({
+      objectType: 'text',
+      text: `🔮 별의 타로 — ${selectedTopic}\n\n${drawnCards.map(c => `${c.emoji} ${c.name}`).join('  ·  ')}\n\n오늘의 운세를 확인해보세요!`,
+      link: {
+        mobileWebUrl: window.location.href,
+        webUrl: window.location.href,
+      },
+    });
+  } else {
+    // SDK 미로드 시 알림
+    alert('카카오 공유 기능을 사용하려면 상단 스크립트 태그의 주석을 해제하고\n카카오 개발자 콘솔에서 도메인을 등록해주세요.');
+  }
+}
+
+// ══════════════════════════════════════════
+//  이미지 저장 (html2canvas 필요)
+// ══════════════════════════════════════════
+function saveImage() {
+  if (window.html2canvas) {
+    html2canvas(document.getElementById('resultSection'), {
+      backgroundColor: '#0a0612',
+      scale: 2,
+      useCORS: true
+    }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = `별의타로_${selectedTopic}_${new Date().toLocaleDateString('ko-KR')}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  } else {
+    alert('이미지 저장 기능을 활성화하려면\n<head>에 아래 스크립트를 추가해주세요:\n\n<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"><\/script>');
+  }
+}
+
+// ══════════════════════════════════════════
+//  다시 뽑기
+// ══════════════════════════════════════════
+function resetApp() {
+  isDrawn = false;
+
+  const rs = document.getElementById('resultSection');
+  rs.classList.remove('visible');
+
+  const ds = document.getElementById('drawSection');
+  ds.style.display = 'block';
+
+  const btn = document.getElementById('drawBtn');
+  btn.disabled = false;
+  btn.textContent = '✦ 카드 뽑기 ✦';
+
+  initCards();
+
+  // 페이지 맨 위로 부드럽게
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ══════════════════════════════════════════
+//  초기화
+// ══════════════════════════════════════════
+createStars();
+initCards();
+</script>
+
+</body>
+</html>
