@@ -105,6 +105,55 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 .retry-btn{display:block;width:100%;margin-top:24px;padding:14px;background:transparent;border:1px solid var(--border);border-radius:50px;color:var(--muted);font-size:13px;font-family:'Noto Serif KR',serif;letter-spacing:2px;cursor:pointer;transition:all 0.3s;}
 .retry-btn:hover{border-color:var(--purple-light);color:var(--purple-light);}
 
+/* ── 광고 영역 ── */
+.ad-video-wrap{margin:24px 0;border-radius:14px;overflow:hidden;background:var(--surface);border:1px solid var(--border);min-height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;position:relative;}
+.ad-video-wrap::before{content:'AD';position:absolute;top:8px;left:10px;font-size:9px;color:var(--muted);letter-spacing:2px;opacity:0.5;}
+.ad-banner-wrap{margin:16px 0;border-radius:10px;overflow:hidden;background:var(--surface);border:1px solid var(--border);min-height:60px;display:flex;align-items:center;justify-content:center;position:relative;}
+.ad-banner-wrap::before{content:'AD';position:absolute;top:4px;left:8px;font-size:9px;color:var(--muted);letter-spacing:2px;opacity:0.5;}
+.ad-placeholder{font-size:11px;color:var(--muted);opacity:0.5;letter-spacing:1px;}
+
+/* ── 카드 클릭 힌트 ── */
+.card-hint{text-align:center;font-size:11px;color:var(--purple-light);margin:8px 0 16px;opacity:0.8;letter-spacing:0.5px;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:0.8;}50%{opacity:0.4;}}
+.card-slot.waiting .tarot-card{cursor:pointer;}
+.card-slot.done .tarot-card{cursor:default;}
+
+/* ── 결과 페이지 — 헤더/주제 숨김 ── */
+.result-section.visible ~ * .page-header-area{display:none;}
+#topSection{transition:all 0.4s;}
+#topSection.hidden{display:none;}
+
+/* ── 인스타 공유 카드 버튼 ── */
+.share-card-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;padding:13px;background:linear-gradient(135deg,rgba(155,125,232,0.15),rgba(201,168,76,0.12));border:1px solid rgba(155,125,232,0.4);border-radius:12px;color:var(--purple-light);font-size:13px;font-family:'Noto Serif KR',serif;cursor:pointer;transition:all 0.3s;}
+.share-card-btn:hover{border-color:var(--purple);background:rgba(155,125,232,0.2);transform:translateY(-1px);}
+
+/* ── 인스타 카드 모달 ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.hidden{display:none;}
+.modal-inner{width:100%;max-width:420px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:20px;}
+.modal-title{font-size:13px;color:var(--muted);text-align:center;margin-bottom:16px;letter-spacing:1px;}
+
+/* ── 공유 카드 캔버스 영역 ── */
+#shareCardCanvas{width:100%;aspect-ratio:1/1;border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.share-card-preview{width:100%;aspect-ratio:1/1;background:linear-gradient(135deg,#0a0612 0%,#1a0e35 50%,#0a0612 100%);border-radius:14px;padding:28px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;}
+.share-card-preview::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 30%,rgba(155,125,232,0.2),transparent 60%),radial-gradient(ellipse at 70% 70%,rgba(201,168,76,0.15),transparent 60%);pointer-events:none;}
+.sc-top{position:relative;z-index:1;}
+.sc-date{font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:6px;}
+.sc-topic{font-size:13px;color:var(--purple-light);letter-spacing:2px;text-transform:uppercase;}
+.sc-divider{width:40px;height:1px;background:var(--gold);margin:16px 0;opacity:0.6;}
+.sc-summary{font-size:18px;font-weight:700;color:var(--accent);line-height:1.5;position:relative;z-index:1;letter-spacing:0.5px;}
+.sc-bottom{position:relative;z-index:1;}
+.sc-cards{display:flex;gap:6px;margin-bottom:10px;}
+.sc-card-chip{background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:20px;padding:3px 10px;font-size:10px;color:var(--gold-light);}
+.sc-brand{font-family:'Cinzel',serif;font-size:10px;color:var(--gold);letter-spacing:3px;opacity:0.7;}
+.sc-stars{position:absolute;inset:0;pointer-events:none;}
+
+.modal-btn-row{display:flex;gap:10px;}
+.modal-dl-btn{flex:1;padding:12px;background:linear-gradient(135deg,rgba(201,168,76,0.2),rgba(155,125,232,0.2));border:1px solid var(--gold);border-radius:10px;color:var(--gold-light);font-size:13px;font-family:'Noto Serif KR',serif;cursor:pointer;transition:all 0.3s;text-align:center;}
+.modal-dl-btn:hover{background:rgba(201,168,76,0.3);}
+.modal-close-btn{padding:12px 20px;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:13px;font-family:'Noto Serif KR',serif;cursor:pointer;transition:all 0.3s;}
+.modal-close-btn:hover{border-color:var(--purple-light);color:var(--purple-light);}
+
 /* INFO PAGE */
 .info-hero{text-align:center;padding:40px 0 20px;}
 .info-hero h2{font-size:24px;font-weight:300;color:var(--accent);letter-spacing:2px;margin-bottom:10px;}
@@ -173,6 +222,7 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 <!-- ═══ PAGE 1: DRAW ═══ -->
 <div class="page active" id="page-tarot">
 <div class="container">
+  <div id="topSection">
   <header>
     <div class="logo">★ Byeol Tarot ★</div>
     <h1>별의 타로</h1>
@@ -188,20 +238,40 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
     <button class="topic-btn" data-topic="건강운"><span class="icon">🌿</span>건강운</button>
     <button class="topic-btn" data-topic="인간관계"><span class="icon">🤝</span>인간관계</button>
   </div>
-  <div class="draw-section" id="drawSection">
-    <div class="section-label">카드를 뽑아주세요</div>
-    <div class="cards-row" id="cardsRow"></div>
-    <button class="draw-btn" id="drawBtn" onclick="drawCards()">✦ 카드 뽑기 ✦</button>
   </div>
+
+  <div class="draw-section" id="drawSection">
+    <div class="section-label">카드를 한 장씩 눌러서 뽑아보세요</div>
+    <div class="cards-row" id="cardsRow"></div>
+    <p class="card-hint" id="cardHint">✦ 카드를 터치해서 운명을 확인하세요 ✦</p>
+  </div>
+
   <div class="result-section" id="resultSection">
+    <!-- 동영상 광고 (단가 높은 인피드 형태) -->
+    <div class="ad-video-wrap">
+      <!-- 애드센스 동영상 광고 코드 삽입 위치 -->
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXX" data-ad-slot="XXXXXXXX" data-ad-format="fluid" data-ad-layout="in-article"></ins> -->
+      <div class="ad-placeholder">📺 동영상 광고 영역</div>
+      <div style="font-size:10px;color:var(--muted);opacity:0.4;">Google AdSense In-feed Video</div>
+    </div>
     <div class="result-chips" id="resultChips"></div>
     <div class="reading-box">
       <div class="reading-badge" id="resultTopic"></div>
       <div class="reading-text" id="readingText"><div class="loading-dots"><span></span><span></span><span></span></div></div>
     </div>
+    <!-- 인스타 공유 카드 버튼 -->
+    <button class="share-card-btn" onclick="openShareCard()">
+      ✨ 오늘의 타로 공유 카드 만들기
+    </button>
     <div class="share-row">
       <button class="share-btn kakao-btn" onclick="shareKakao()">카카오 공유</button>
       <button class="share-btn" onclick="saveImage()">이미지 저장</button>
+    </div>
+    <!-- 띠배너 광고 -->
+    <div class="ad-banner-wrap" style="margin-top:20px;">
+      <!-- 애드센스 띠배너 광고 코드 삽입 위치 -->
+      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXX" data-ad-slot="XXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
+      <div class="ad-placeholder">📢 띠배너 광고 영역 (728×90)</div>
     </div>
     <button class="retry-btn" onclick="resetApp()">↺ 다시 뽑기</button>
   </div>
@@ -215,7 +285,17 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 </div>
 </div>
 
-<!-- ═══ PAGE 2: ABOUT ═══ -->
+<!-- ═══ 인스타 공유 카드 모달 ═══ -->
+<div class="modal-overlay hidden" id="shareModal">
+  <div class="modal-inner">
+    <div class="modal-title">✦ 공유 카드 미리보기 ✦</div>
+    <div id="shareCardPreview"></div>
+    <div class="modal-btn-row">
+      <button class="modal-dl-btn" onclick="downloadShareCard()">📥 이미지 저장</button>
+      <button class="modal-close-btn" onclick="closeShareCard()">닫기</button>
+    </div>
+  </div>
+</div>
 <div class="page" id="page-about">
 <div class="container-wide">
   <div class="info-hero">
@@ -1275,41 +1355,87 @@ function shuffleAndPick(n) {
   return [...TAROT_CARDS].sort(() => Math.random() - 0.5).slice(0, n);
 }
 
-function drawCards() {
-  if (isDrawn) return;
-  isDrawn = true;
+// ── 카드 뒤집기 효과음 (Web Audio API) ──
+function playFlipSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const buf = ctx.createBuffer(1, ctx.sampleRate * 0.12, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) {
+      const t = i / ctx.sampleRate;
+      const env = Math.exp(-t * 35);
+      data[i] = (Math.random() * 2 - 1) * env * 0.6
+               + Math.sin(2 * Math.PI * 800 * t) * env * 0.3
+               + Math.sin(2 * Math.PI * 1600 * t * (1 - t * 3)) * env * 0.2;
+    }
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.5, ctx.currentTime);
+    src.connect(gain);
+    gain.connect(ctx.destination);
+    src.start();
+  } catch(e) {}
+}
+
+// ── 카드 초기화 (클릭 인터랙션 방식) ──
+function initCards() {
+  const row = document.getElementById('cardsRow');
+  row.innerHTML = '';
   drawnCards = shuffleAndPick(3);
-  const btn = document.getElementById('drawBtn');
-  btn.disabled = true;
-  btn.textContent = '✦ 카드가 말을 건네고 있어요... ✦';
+  flippedCount = 0;
 
+  const labels = ['과거', '현재', '미래'];
   drawnCards.forEach((card, i) => {
-    setTimeout(() => {
-      // inject face HTML before flip
-      const faceEl = document.getElementById(`face${i}`);
-      faceEl.innerHTML = makeFaceHTML(card);
-      faceEl.style.display = 'none';
-      // replace inner face div with proper .card-face content
-      const cardEl = document.getElementById(`card${i}`);
-      // remove old placeholder face
-      const oldFace = cardEl.querySelector('#face' + i);
-      if (oldFace) cardEl.removeChild(oldFace);
-      cardEl.insertAdjacentHTML('beforeend', makeFaceHTML(card));
-      cardEl.classList.add('flipped');
-      const slotEl = document.getElementById(`slot${i}`);
-      slotEl.classList.remove('waiting');
-      slotEl.classList.add('selected');
-    }, i * 800);
+    const slot = document.createElement('div');
+    slot.className = 'card-slot waiting';
+    slot.id = `slot${i}`;
+    slot.style.setProperty('--fd', `${2 + i * 0.8}s`);
+    slot.innerHTML = `
+      <div class="tarot-card" id="card${i}" onclick="flipCard(${i})">
+        <div class="card-back">
+          <div class="card-back-inner">${CARD_BACK_SVG}</div>
+        </div>
+        ${makeFaceHTML(card)}
+      </div>
+      <div class="card-slot-label">${labels[i]}</div>`;
+    row.appendChild(slot);
   });
+}
 
-  setTimeout(() => showResult(), 3200);
+let flippedCount = 0;
+
+function flipCard(i) {
+  const cardEl = document.getElementById(`card${i}`);
+  const slotEl = document.getElementById(`slot${i}`);
+  if (cardEl.classList.contains('flipped') || slotEl.classList.contains('done')) return;
+
+  playFlipSound();
+  cardEl.classList.add('flipped');
+  slotEl.classList.remove('waiting');
+  slotEl.classList.add('done');
+  flippedCount++;
+
+  // 힌트 업데이트
+  const hint = document.getElementById('cardHint');
+  if (flippedCount === 1) hint.textContent = '✦ 두 번째 카드를 뽑아보세요 ✦';
+  else if (flippedCount === 2) hint.textContent = '✦ 마지막 카드를 뽑아보세요 ✦';
+  else if (flippedCount === 3) {
+    hint.textContent = '✦ 카드가 모두 열렸어요 — 풀이를 확인하세요 ✦';
+    hint.style.animation = 'none';
+    setTimeout(() => showResult(), 800);
+  }
 }
 
 async function showResult() {
+  // 상단(헤더+주제선택) 숨기기
+  document.getElementById('topSection').classList.add('hidden');
   document.getElementById('drawSection').style.display = 'none';
+
   const rs = document.getElementById('resultSection');
   rs.classList.add('visible');
-  document.getElementById('resultTopic').textContent = `✦ ${selectedTopic} 풀이`;
+  // "타로 풀이" 고정 텍스트
+  document.getElementById('resultTopic').textContent = `✦ 타로 풀이 — ${selectedTopic}`;
 
   const chips = document.getElementById('resultChips');
   chips.innerHTML = drawnCards.map(c =>
@@ -1323,29 +1449,107 @@ async function showResult() {
 
   if (GEMINI_API_KEY && GEMINI_API_KEY !== 'YOUR_GEMINI_API_KEY') {
     try {
-      const prompt = `당신은 신비롭고 따뜻한 타로 마스터입니다. MZ세대(20대)를 위한 현대적이고 공감가는 언어로 타로 풀이를 해주세요.\n\n주제: ${selectedTopic}\n뽑은 카드:\n${cardDesc}\n\n세 카드의 흐름을 바탕으로 ${selectedTopic}에 대한 풀이를 170자 내외로 작성해주세요. 신비롭고 시적이면서도 MZ세대가 공감할 수 있는 톤으로, 희망적이고 따뜻하게 마무리해 주세요. 이모지를 2~3개 사용해도 좋습니다.`;
+      const prompt = `당신은 깊이 있고 신비로운 타로 마스터입니다. MZ세대(20대)가 공감할 수 있는 현대적인 언어로 타로 풀이를 해주세요.
+
+주제: ${selectedTopic}
+뽑은 카드:
+${cardDesc}
+
+아래 구조로 풀이를 작성해주세요 (총 300자 이상):
+
+1. 세 카드의 전체적인 흐름을 읽는 도입부 (2~3문장)
+2. 과거 카드가 현재에 미치는 영향 (2문장)
+3. 현재 카드가 전하는 핵심 메시지 (2~3문장)  
+4. 미래 카드가 예고하는 방향과 조언 (2~3문장)
+5. 마무리 — 희망적이고 따뜻한 한 줄 메시지
+
+- 신비롭고 시적이면서도 20대가 바로 공감할 수 있는 감성
+- 단순히 카드 의미를 나열하지 말고, 세 카드를 하나의 이야기로 엮어서 풀어주세요
+- 이모지 2~3개 자연스럽게 포함
+- 단락 구분은 빈 줄로`;
+
       const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
         {method:'POST',headers:{'Content-Type':'application/json'},
-         body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:400,temperature:0.9}})});
+         body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:800,temperature:0.95}})});
       if (!res.ok) throw new Error(res.status);
       const data = await res.json();
       const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
       if (!text) throw new Error('empty');
       readingEl.textContent = text;
+      currentReading = text;
       return;
     } catch(e) { console.warn('Gemini fallback:', e.message); }
   }
 
+  // Fallback — 300자 이상 버전
   const n = drawnCards.map(c => c.name);
+  const m = drawnCards.map(c => c.meaning);
   const fb = {
-    '오늘의 운세':`${n[0]}의 에너지가 과거를 밝혀줍니다. 현재 ${n[1]}이 흐르고 있어요. 앞으로 ${n[2]}의 기운이 펼쳐질 거예요 ✨ 오늘 하루, 당신의 직관을 믿어보세요.`,
-    '연애운':`${n[0]}이 보여주는 과거 위에, 현재 ${n[1]}의 기운이 흘러요. 마음에 솔직해질 때가 왔어요. ${n[2]}이 예고하는 인연이 기다려요 💕`,
-    '직업운':`${n[0]}을 거쳐 온 당신, ${n[1]}의 힘이 빛나고 있어요. ${n[2]}의 방향으로 나아가면 성과가 찾아와요. 꾸준함이 무기예요 💼`,
-    '금전운':`${n[0]}의 교훈 위에 ${n[1]}이 기회를 알려줘요. ${n[2]}에서 예상치 못한 행운이 올 수 있어요 💰`,
-    '건강운':`${n[0]}을 지나 ${n[1]}의 회복 에너지가 흘러요. ${n[2]}이 말하듯 자신을 먼저 돌보세요 🌿`,
-    '인간관계':`${n[0]}을 통해 배운 인연, ${n[1]}의 따뜻한 기운이 흘러요. ${n[2]}에서 진정한 신뢰가 깊어질 거예요 🤝`
+    '오늘의 운세': `${n[0]}의 기운이 당신의 과거를 조용히 비추고 있어요. ${m[0]}의 에너지가 지금의 당신을 만든 토대가 되었답니다.\n\n현재는 ${n[1]}이 흐르고 있어요. ${m[1]}을 기억하세요 — 지금 이 순간이야말로 변화의 씨앗을 심기에 가장 좋은 때예요. 당신 안에 이미 필요한 모든 것이 있어요. ✨\n\n${n[2]}이 예고하는 미래는 기대 이상이에요. ${m[2]}의 에너지가 당신의 앞길을 밝혀줄 거예요. 조급해하지 말고, 지금 이 흐름을 믿어보세요.\n\n오늘 하루, 당신의 직관을 신뢰하는 하루가 되길 바라요 🌟`,
+    '연애운': `${n[0]}이 당신의 지난 인연에 담긴 이야기를 보여줘요. ${m[0]}의 에너지 속에서 당신은 많은 것을 배웠고, 그 경험이 지금의 당신을 더 깊은 사람으로 만들었어요.\n\n현재는 ${n[1]}의 기운이 감돌아요. ${m[1]} — 지금 당신의 마음 속에는 솔직하게 표현하지 못한 감정이 있을 수 있어요. 그 감정에 귀를 기울여 보세요. 💕\n\n${n[2]}이 예고하는 미래는 진심이 통하는 순간이에요. ${m[2]}의 에너지가 당신의 마음이 향하는 곳으로 자연스럽게 이끌어 줄 거예요.\n\n먼저 자신을 사랑하는 것에서 모든 인연은 시작돼요 🌸`,
+    '직업운': `${n[0]}을 거쳐 온 당신의 여정을 돌아보면, ${m[0]}의 에너지가 지금 당신의 역량을 만들어낸 배경임을 알 수 있어요.\n\n현재 ${n[1]}의 기운이 당신 곁에 있어요. ${m[1]} — 지금이야말로 그동안 갈고닦은 실력을 펼칠 때예요. 주변의 시선보다 자신의 페이스를 믿으세요. 💼\n\n${n[2]}이 가리키는 방향으로 한 걸음씩 나아가면, ${m[2]}의 에너지가 분명한 성과로 이어질 거예요.\n\n꾸준함이 재능을 이긴다는 걸 기억하세요 🌿`,
+    '금전운': `${n[0]}의 에너지가 당신의 금전 흐름의 뿌리를 보여줘요. ${m[0]}의 경험을 통해 이제는 더 현명한 선택을 할 수 있게 되었어요.\n\n현재 ${n[1]}이 전하는 메시지는 분명해요. ${m[1]} — 지금은 욕심보다 지혜가 필요한 때예요. 작은 것에도 감사하는 마음이 더 큰 풍요로 이어져요. 💰\n\n${n[2]}은 예상치 못한 곳에서 기회가 열릴 수 있다고 속삭여요. ${m[2]}의 에너지를 놓치지 마세요.\n\n지금의 선택이 미래의 풍요를 만들어요 ✨`,
+    '건강운': `${n[0]}이 보여주는 과거의 에너지, ${m[0]}의 흔적 위에서 지금의 당신이 서 있어요.\n\n현재 ${n[1]}의 회복 에너지가 흐르고 있어요. ${m[1]} — 몸이 보내는 신호를 무시하지 마세요. 지금 가장 필요한 것은 진정한 휴식일 수 있어요. 🌿\n\n${n[2]}이 말하듯, 자신을 가장 소중한 존재로 대하는 것에서 모든 건강이 시작돼요. ${m[2]}의 에너지가 당신의 회복을 도울 거예요.\n\n오늘 하루만큼은 자신을 위한 시간을 내주세요 🌸`,
+    '인간관계': `${n[0]}을 통해 배운 인연의 소중함, ${m[0]}의 에너지가 당신을 더 따뜻한 사람으로 만들어왔어요.\n\n현재 ${n[1]}의 기운이 당신과 주변 사람들을 연결하고 있어요. ${m[1]} — 때로는 먼저 손을 내미는 용기가 관계를 더 깊게 만들어요. 지금 떠오르는 사람에게 연락해보는 건 어떨까요? 🤝\n\n${n[2]}이 예고하는 미래의 관계는 더욱 진실되고 깊어질 거예요. ${m[2]}의 에너지가 오해를 풀고 진정한 이해의 다리를 놓아줄 거예요.\n\n진심은 언제나 통해요 💕`
   };
-  readingEl.textContent = fb[selectedTopic] || fb['오늘의 운세'];
+  const fallbackText = fb[selectedTopic] || fb['오늘의 운세'];
+  readingEl.textContent = fallbackText;
+  currentReading = fallbackText;
+}
+
+// ── 공유 카드 ──
+let currentReading = '';
+
+function getSummary(text) {
+  // 첫 문장 또는 50자 이하로 요약
+  const first = text.split(/[.!?。\n]/)[0].trim();
+  return first.length > 50 ? first.substring(0, 48) + '…' : first;
+}
+
+function openShareCard() {
+  if (!currentReading) return;
+  const modal = document.getElementById('shareModal');
+  const preview = document.getElementById('shareCardPreview');
+  modal.classList.remove('hidden');
+
+  const today = new Date();
+  const dateStr = `${today.getFullYear()}년 ${today.getMonth()+1}월 ${today.getDate()}일`;
+  const summary = getSummary(currentReading);
+  const cardChips = drawnCards.map(c => `<div class="sc-card-chip">${c.name}</div>`).join('');
+
+  preview.innerHTML = `
+    <div class="share-card-preview" id="scPreviewInner">
+      <div class="sc-top">
+        <div class="sc-date">${dateStr}</div>
+        <div class="sc-topic">${selectedTopic}</div>
+        <div class="sc-divider"></div>
+        <div class="sc-summary">"${summary}"</div>
+      </div>
+      <div class="sc-bottom">
+        <div class="sc-cards">${cardChips}</div>
+        <div class="sc-brand">★ BYEOL TAROT ★</div>
+      </div>
+    </div>`;
+}
+
+function closeShareCard() {
+  document.getElementById('shareModal').classList.add('hidden');
+}
+
+function downloadShareCard() {
+  const el = document.getElementById('scPreviewInner');
+  if (!el) return;
+  if (window.html2canvas) {
+    html2canvas(el, {backgroundColor:'#0a0612', scale:3, useCORS:true}).then(canvas => {
+      const a = document.createElement('a');
+      const today = new Date();
+      a.download = `별의타로_${selectedTopic}_${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}.png`;
+      a.href = canvas.toDataURL('image/png');
+      a.click();
+    });
+  } else {
+    alert('이미지 저장을 위해 html2canvas 스크립트를 추가해주세요:\n<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"><\/script>');
+  }
 }
 
 function shareKakao() {
@@ -1353,7 +1557,7 @@ function shareKakao() {
     if (!Kakao.isInitialized()) Kakao.init(KAKAO_APP_KEY);
     Kakao.Share.sendDefault({
       objectType:'text',
-      text:`🔮 별의 타로 — ${selectedTopic}\n\n${drawnCards.map(c=>`${c.number} ${c.name}`).join('  ·  ')}\n\n오늘의 운세를 확인해보세요!`,
+      text:`🔮 별의 타로 — ${selectedTopic}\n\n${drawnCards.map(c=>`${c.number} ${c.name}`).join('  ·  ')}\n\n${getSummary(currentReading)}\n\n오늘의 운세를 확인해보세요!`,
       link:{mobileWebUrl:window.location.href,webUrl:window.location.href}
     });
   } else {
@@ -1377,11 +1581,14 @@ function saveImage() {
 
 function resetApp() {
   isDrawn = false;
+  flippedCount = 0;
+  currentReading = '';
   document.getElementById('resultSection').classList.remove('visible');
-  document.getElementById('drawSection').style.display='block';
-  const btn = document.getElementById('drawBtn');
-  btn.disabled = false;
-  btn.textContent = '✦ 카드 뽑기 ✦';
+  document.getElementById('drawSection').style.display = 'block';
+  document.getElementById('topSection').classList.remove('hidden');
+  const hint = document.getElementById('cardHint');
+  hint.textContent = '✦ 카드를 터치해서 운명을 확인하세요 ✦';
+  hint.style.animation = '';
   initCards();
   window.scrollTo({top:0,behavior:'smooth'});
 }
