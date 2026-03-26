@@ -1637,21 +1637,38 @@ async function shareCardInsta() {
     const file = new File([blob], fname, { type: 'image/png' });
 
     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-      // 모바일 Web Share API — 인스타 앱 포함 공유 시트 열림
+      // iOS/Android 모바일 — 공유 시트 열기 (인스타, 카카오, 이미지저장 등 포함)
       await navigator.share({
         files: [file],
         title: `별의 타로 — ${selectedTopic}`,
         text: `"${shareSummary}"\n\n★ BYEOL TAROT ★`
       });
     } else {
-      // PC 또는 미지원 브라우저 → 이미지 저장 + 안내
+      // PC 등 미지원 환경 → 이미지 저장
       downloadBlob(blob, fname);
-      setTimeout(() => alert('📸 이미지가 저장됐어요!\n\n인스타그램 앱 → 새 게시물 → 갤러리에서 선택해서 업로드하세요.\n\n(인스타 직접 연결은 스마트폰 모바일 브라우저에서만 지원돼요)'), 600);
+      setTimeout(() => alert('📸 이미지가 저장됐어요!\n인스타그램 앱에서 업로드해주세요.'), 600);
     }
   } catch(e) {
     if (e.name !== 'AbortError') alert('공유 중 오류: ' + e.message);
   }
   btn.textContent = origText;
+}
+
+function saveImage() {
+  html2canvas(document.getElementById('resultSection'), {backgroundColor:'#0a0612', scale:2, useCORS:true, logging:false})
+    .then(async canvas => {
+      const blob = await canvasToBlob(canvas);
+      const fname = getFileName('별의타로');
+      const file = new File([blob], fname, { type: 'image/png' });
+
+      // iOS Safari — 공유 시트에서 "이미지 저장" 누르면 사진첩 저장
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: fname });
+      } else {
+        // PC 등 — 직접 다운로드
+        downloadBlob(blob, fname);
+      }
+    }).catch(e => alert('저장 실패: ' + e.message));
 }
 
 function shareKakao() {
@@ -1665,14 +1682,6 @@ function shareKakao() {
   } else {
     alert('카카오 공유 기능을 사용하려면\n카카오 SDK 스크립트 태그의 주석을 해제하고\n카카오 개발자 콘솔에서 도메인을 등록해주세요.');
   }
-}
-
-function saveImage() {
-  html2canvas(document.getElementById('resultSection'), {backgroundColor:'#0a0612', scale:2, useCORS:true, logging:false})
-    .then(async canvas => {
-      const blob = await canvasToBlob(canvas);
-      downloadBlob(blob, getFileName('별의타로'));
-    }).catch(e => alert('저장 실패: ' + e.message));
 }
 
 function resetApp() {
