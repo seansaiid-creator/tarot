@@ -156,8 +156,8 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 .modal-btn-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .modal-kakao-btn{padding:11px 6px;background:#FEE500;border:none;border-radius:10px;color:#3A1D1D;font-size:11px;font-family:'Noto Serif KR',serif;cursor:pointer;transition:all 0.2s;text-align:center;font-weight:700;}
 .modal-kakao-btn:hover{background:#FFD900;transform:translateY(-1px);}
-.modal-insta-btn{padding:11px 6px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border:none;border-radius:10px;color:#fff;font-size:11px;font-family:'Noto Serif KR',serif;cursor:pointer;transition:all 0.2s;text-align:center;font-weight:700;}
-.modal-insta-btn:hover{opacity:0.9;transform:translateY(-1px);}
+.modal-insta-btn{padding:11px 6px;background:linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);border:none;border-radius:10px;color:#fff;font-size:11px;font-family:'Noto Serif KR',serif;cursor:pointer;transition:all 0.2s;text-align:center;font-weight:700;box-shadow:0 2px 8px rgba(220,39,67,0.4);}
+.modal-insta-btn:hover{opacity:0.88;transform:translateY(-1px);box-shadow:0 4px 12px rgba(220,39,67,0.5);}
 .modal-dl-btn{padding:11px 6px;background:rgba(201,168,76,0.15);border:1px solid var(--gold);border-radius:10px;color:var(--gold-light);font-size:11px;font-family:'Noto Serif KR',serif;cursor:pointer;transition:all 0.2s;text-align:center;}
 .modal-dl-btn:hover{background:rgba(201,168,76,0.25);transform:translateY(-1px);}
 
@@ -1582,19 +1582,34 @@ async function getShareCardCanvas() {
   return await html2canvas(el, {backgroundColor:'#0a0612', scale:3, useCORS:true, logging:false});
 }
 
+function canvasToBlob(canvas) {
+  return new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+}
+
+function getFileName(prefix) {
+  const today = new Date();
+  return `${prefix}_${selectedTopic}_${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}.png`;
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
 async function downloadShareCard() {
-  const el = document.getElementById('scPreviewInner');
-  if (!el) return;
   const btn = document.querySelector('.modal-dl-btn');
   btn.textContent = '생성 중...';
   try {
     const canvas = await getShareCardCanvas();
-    const today = new Date();
-    const a = document.createElement('a');
-    a.download = `별의타로_${selectedTopic}_${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}.png`;
-    a.href = canvas.toDataURL('image/png');
-    a.click();
-  } catch(e) { alert('이미지 저장 실패: ' + e.message); }
+    const blob = await canvasToBlob(canvas);
+    downloadBlob(blob, getFileName('별의타로카드'));
+  } catch(e) { alert('저장 실패: ' + e.message); }
   btn.textContent = '📥 이미지 저장';
 }
 
@@ -1607,43 +1622,45 @@ async function shareCardKakao() {
       link: { mobileWebUrl: window.location.href, webUrl: window.location.href }
     });
   } else {
-    alert('카카오 공유를 활성화하려면:\n\n1. developers.kakao.com에서 앱 도메인 등록\n2. index.html 상단 카카오 SDK 스크립트 주석 해제\n3. 다시 push 후 테스트');
+    alert('카카오 SDK가 로드되지 않았어요.\nindex.html 상단 카카오 SDK 스크립트를 확인해주세요.');
   }
 }
 
 async function shareCardInsta() {
-  // 인스타그램은 Web Share API로 이미지 공유 시도
+  const btn = document.querySelector('.modal-insta-btn');
+  const origText = btn.textContent;
+  btn.textContent = '준비 중...';
   try {
     const canvas = await getShareCardCanvas();
-    canvas.toBlob(async (blob) => {
-      const file = new File([blob], `별의타로_${selectedTopic}.png`, { type: 'image/png' });
-      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-          files: [file],
-          title: `별의 타로 — ${selectedTopic}`,
-          text: `"${shareSummary}" — byeol tarot`
-        });
-      } else {
-        // Web Share API 미지원 시 이미지 저장 후 안내
-        const a = document.createElement('a');
-        a.download = `별의타로_${selectedTopic}.png`;
-        a.href = canvas.toDataURL('image/png');
-        a.click();
-        setTimeout(() => alert('이미지가 저장됐어요!\n인스타그램 앱에서 새 게시물 → 갤러리에서 이미지를 선택해서 업로드해주세요 📸'), 500);
-      }
-    }, 'image/png');
+    const blob = await canvasToBlob(canvas);
+    const fname = getFileName('별의타로카드');
+    const file = new File([blob], fname, { type: 'image/png' });
+
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      // 모바일 Web Share API — 인스타 앱 포함 공유 시트 열림
+      await navigator.share({
+        files: [file],
+        title: `별의 타로 — ${selectedTopic}`,
+        text: `"${shareSummary}"\n\n★ BYEOL TAROT ★`
+      });
+    } else {
+      // PC 또는 미지원 브라우저 → 이미지 저장 + 안내
+      downloadBlob(blob, fname);
+      setTimeout(() => alert('📸 이미지가 저장됐어요!\n\n인스타그램 앱 → 새 게시물 → 갤러리에서 선택해서 업로드하세요.\n\n(인스타 직접 연결은 스마트폰 모바일 브라우저에서만 지원돼요)'), 600);
+    }
   } catch(e) {
-    if (e.name !== 'AbortError') alert('공유 중 오류가 발생했어요.');
+    if (e.name !== 'AbortError') alert('공유 중 오류: ' + e.message);
   }
+  btn.textContent = origText;
 }
 
 function shareKakao() {
   if (window.Kakao) {
     if (!Kakao.isInitialized()) Kakao.init(KAKAO_APP_KEY);
     Kakao.Share.sendDefault({
-      objectType:'text',
-      text:`🔮 별의 타로 — ${selectedTopic}\n\n${drawnCards.map(c=>`${c.number} ${c.name}`).join('  ·  ')}\n\n${getSummary(currentReading)}\n\n오늘의 운세를 확인해보세요!`,
-      link:{mobileWebUrl:window.location.href,webUrl:window.location.href}
+      objectType: 'text',
+      text: `🔮 별의 타로 — ${selectedTopic}\n\n${drawnCards.map(c=>`${c.number} ${c.name}`).join('  ·  ')}\n\n${shareSummary ? '"'+shareSummary+'"' : ''}\n\n오늘의 운세를 확인해보세요!`,
+      link: {mobileWebUrl: window.location.href, webUrl: window.location.href}
     });
   } else {
     alert('카카오 공유 기능을 사용하려면\n카카오 SDK 스크립트 태그의 주석을 해제하고\n카카오 개발자 콘솔에서 도메인을 등록해주세요.');
@@ -1651,13 +1668,10 @@ function shareKakao() {
 }
 
 function saveImage() {
-  const btn = document.querySelector('.share-btn:last-of-type');
-  html2canvas(document.getElementById('resultSection'),{backgroundColor:'#0a0612',scale:2,useCORS:true,logging:false})
-    .then(canvas=>{
-      const a=document.createElement('a');
-      a.download=`별의타로_${selectedTopic}.png`;
-      a.href=canvas.toDataURL('image/png');
-      a.click();
+  html2canvas(document.getElementById('resultSection'), {backgroundColor:'#0a0612', scale:2, useCORS:true, logging:false})
+    .then(async canvas => {
+      const blob = await canvasToBlob(canvas);
+      downloadBlob(blob, getFileName('별의타로'));
     }).catch(e => alert('저장 실패: ' + e.message));
 }
 
