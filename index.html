@@ -1654,21 +1654,32 @@ async function shareCardInsta() {
   btn.textContent = origText;
 }
 
-function saveImage() {
-  html2canvas(document.getElementById('resultSection'), {backgroundColor:'#0a0612', scale:2, useCORS:true, logging:false})
-    .then(async canvas => {
-      const blob = await canvasToBlob(canvas);
-      const fname = getFileName('별의타로');
-      const file = new File([blob], fname, { type: 'image/png' });
+async function saveImage() {
+  try {
+    const canvas = await html2canvas(document.getElementById('resultSection'), {
+      backgroundColor:'#0a0612', scale:2, useCORS:true, logging:false
+    });
+    const blob = await canvasToBlob(canvas);
+    const fname = getFileName('별의타로');
+    const file = new File([blob], fname, { type: 'image/png' });
 
-      // iOS Safari — 공유 시트에서 "이미지 저장" 누르면 사진첩 저장
-      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file], title: fname });
-      } else {
-        // PC 등 — 직접 다운로드
-        downloadBlob(blob, fname);
+    // iOS Safari 포함 모바일 — 공유 시트 열기 (거기서 "이미지 저장" 누르면 사진첩 저장)
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: '별의 타로 결과' });
+      } catch(shareErr) {
+        if (shareErr.name !== 'AbortError') {
+          // share 실패 시 직접 다운로드로 fallback
+          downloadBlob(blob, fname);
+        }
       }
-    }).catch(e => alert('저장 실패: ' + e.message));
+    } else {
+      // PC — 직접 다운로드
+      downloadBlob(blob, fname);
+    }
+  } catch(e) {
+    alert('저장 실패: ' + e.message);
+  }
 }
 
 function shareKakao() {
