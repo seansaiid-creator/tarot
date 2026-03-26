@@ -261,11 +261,16 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
       <div class="ad-placeholder">📺 동영상 광고 영역</div>
       <div style="font-size:10px;color:var(--muted);opacity:0.4;">Google AdSense In-feed Video</div>
     </div>
-    <div class="result-chips" id="resultChips"></div>
-    <div class="reading-box">
-      <div class="reading-badge" id="resultTopic"></div>
-      <div class="reading-text" id="readingText"><div class="loading-dots"><span></span><span></span><span></span></div></div>
+
+    <!-- 이미지 저장 캡처 영역 (카드 + 풀이만 포함) -->
+    <div id="captureArea" style="background:#0a0612;border-radius:16px;padding:16px 0;">
+      <div class="result-chips" id="resultChips"></div>
+      <div class="reading-box">
+        <div class="reading-badge" id="resultTopic"></div>
+        <div class="reading-text" id="readingText"><div class="loading-dots"><span></span><span></span><span></span></div></div>
+      </div>
     </div>
+
     <!-- 인스타 공유 카드 버튼 -->
     <button class="share-card-btn" onclick="openShareCard()">
       ✨ 오늘의 타로 공유 카드 만들기
@@ -1608,7 +1613,20 @@ async function downloadShareCard() {
   try {
     const canvas = await getShareCardCanvas();
     const blob = await canvasToBlob(canvas);
-    downloadBlob(blob, getFileName('별의타로카드'));
+    const fname = getFileName('별의타로카드');
+    const file = new File([blob], fname, { type: 'image/png' });
+
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      // iOS — 공유 시트에서 "이미지 저장" 선택하면 사진첩 저장
+      try {
+        await navigator.share({ files: [file], title: '별의 타로 카드' });
+      } catch(shareErr) {
+        if (shareErr.name !== 'AbortError') downloadBlob(blob, fname);
+      }
+    } else {
+      // PC / 안드로이드 — 직접 다운로드
+      downloadBlob(blob, fname);
+    }
   } catch(e) { alert('저장 실패: ' + e.message); }
   btn.textContent = '📥 이미지 저장';
 }
@@ -1656,25 +1674,47 @@ async function shareCardInsta() {
 
 async function saveImage() {
   try {
-    const canvas = await html2canvas(document.getElementById('resultSection'), {
-      backgroundColor:'#0a0612', scale:2, useCORS:true, logging:false
+    // captureArea만 캡처 (광고·버튼 제외, 풀이 텍스트만)
+    const el = document.getElementById('captureArea');
+
+    // 캡처 전 텍스트 색상 강제 지정 (다크모드 대응)
+    const readingEl = document.getElementById('readingText');
+    const badgeEl = document.getElementById('resultTopic');
+    const chipsEl = document.getElementById('resultChips');
+    const origReadingColor = readingEl.style.color;
+    const origBadgeColor = badgeEl.style.color;
+    readingEl.style.color = '#e8e0f5';
+    badgeEl.style.color = '#c4a8ff';
+
+    const canvas = await html2canvas(el, {
+      backgroundColor: '#0a0612',
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      onclone: (doc) => {
+        // 복제된 문서에서도 색상 보장
+        doc.getElementById('readingText').style.color = '#e8e0f5';
+        doc.getElementById('resultTopic').style.color = '#c4a8ff';
+        const chips = doc.querySelectorAll('.chip');
+        chips.forEach(c => { c.style.color = '#f0d080'; c.style.background = 'rgba(201,168,76,0.2)'; });
+      }
     });
+
+    // 원래 색상 복원
+    readingEl.style.color = origReadingColor;
+    badgeEl.style.color = origBadgeColor;
+
     const blob = await canvasToBlob(canvas);
     const fname = getFileName('별의타로');
     const file = new File([blob], fname, { type: 'image/png' });
 
-    // iOS Safari 포함 모바일 — 공유 시트 열기 (거기서 "이미지 저장" 누르면 사진첩 저장)
     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
         await navigator.share({ files: [file], title: '별의 타로 결과' });
       } catch(shareErr) {
-        if (shareErr.name !== 'AbortError') {
-          // share 실패 시 직접 다운로드로 fallback
-          downloadBlob(blob, fname);
-        }
+        if (shareErr.name !== 'AbortError') downloadBlob(blob, fname);
       }
     } else {
-      // PC — 직접 다운로드
       downloadBlob(blob, fname);
     }
   } catch(e) {
