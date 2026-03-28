@@ -164,6 +164,21 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 .modal-dl-btn{padding:11px 6px;background:rgba(201,168,76,0.15);border:1px solid var(--gold);border-radius:10px;color:var(--gold-light);font-size:11px;font-family:'Noto Serif KR',serif;cursor:pointer;transition:all 0.2s;text-align:center;}
 .modal-dl-btn:hover{background:rgba(201,168,76,0.25);transform:translateY(-1px);}
 
+/* ── 인스타 비율 선택 레이어 ── */
+.insta-ratio-layer{display:flex;flex-direction:column;gap:16px;animation:slideUp 0.3s ease;}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.insta-ratio-layer.hidden{display:none;}
+.insta-ratio-title{text-align:center;font-size:13px;color:var(--text);font-weight:500;letter-spacing:1px;}
+.insta-ratio-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.insta-ratio-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:12px;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.insta-ratio-btn:hover{border-color:var(--purple);background:rgba(155,125,232,0.1);}
+.ratio-preview{background:linear-gradient(135deg,rgba(201,168,76,0.2),rgba(155,125,232,0.1));border:1px dashed var(--gold);border-radius:8px;}
+.ratio-45{width:60px;height:75px;}
+.ratio-916{width:45px;height:80px;}
+.ratio-label{font-size:11px;color:var(--muted);letter-spacing:0.5px;}
+.insta-ratio-back{width:100%;padding:10px;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:12px;font-family:'Noto Serif KR',serif;cursor:pointer;transition:all 0.2s;margin-top:8px;}
+.insta-ratio-back:hover{border-color:var(--purple-light);color:var(--purple-light);}
+
 /* INFO PAGE */
 .info-hero{text-align:center;padding:40px 0 20px;}
 .info-hero h2{font-size:24px;font-weight:300;color:var(--accent);letter-spacing:2px;margin-bottom:10px;}
@@ -306,10 +321,28 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
     <button class="modal-close-x" onclick="closeShareCard()">✕</button>
     <div class="modal-title">✦ 공유 카드 미리보기 ✦</div>
     <div id="shareCardPreview"></div>
-    <div class="modal-btn-row">
+    
+    <!-- 기본 버튼 행 -->
+    <div id="modalDefaultBtns" class="modal-btn-row">
       <button class="modal-kakao-btn" onclick="shareCardKakao()">카카오톡 공유</button>
       <button class="modal-insta-btn" onclick="shareCardInsta()">인스타 업로드</button>
       <button class="modal-dl-btn" onclick="downloadShareCard()">📥 이미지 저장</button>
+    </div>
+    
+    <!-- 비율 선택 레이어 (숨겨진 상태, 인스타 클릭 시 표시) -->
+    <div id="instaRatioLayer" class="insta-ratio-layer hidden">
+      <div class="insta-ratio-title">공유할 비율을 선택하세요</div>
+      <div class="insta-ratio-options">
+        <button class="insta-ratio-btn" onclick="generateAndShareInsta('4:5')">
+          <div class="ratio-preview ratio-45"></div>
+          <div class="ratio-label">게시물 (4:5)</div>
+        </button>
+        <button class="insta-ratio-btn" onclick="generateAndShareInsta('9:16')">
+          <div class="ratio-preview ratio-916"></div>
+          <div class="ratio-label">릴스/스토리 (9:16)</div>
+        </button>
+      </div>
+      <button class="insta-ratio-back" onclick="closeInstaRatioLayer()">← 돌아가기</button>
     </div>
   </div>
 </div>
@@ -1586,10 +1619,39 @@ function closeShareCard() {
   document.getElementById('shareModal').classList.add('hidden');
 }
 
-async function getShareCardCanvas() {
+async function getShareCardCanvas(ratio = '4:5') {
   const el = document.getElementById('scPreviewInner');
   if (!el) return null;
-  return await html2canvas(el, {backgroundColor:'#0a0612', scale:3, useCORS:true, logging:false});
+  
+  // 현재 스타일 백업
+  const origWidth = el.style.width;
+  const origHeight = el.style.height;
+  const origAspect = el.style.aspectRatio;
+  
+  // 비율에 따라 크기 조정 (캡처 시에만)
+  if (ratio === '9:16') {
+    // 9:16 비율: 너비 450px, 높이 800px
+    el.style.width = '450px';
+    el.style.height = '800px';
+    el.style.aspectRatio = '9/16';
+  } else {
+    // 4:5 비율 (기본값): 너비 400px, 높이 500px
+    el.style.width = '400px';
+    el.style.height = '500px';
+    el.style.aspectRatio = '4/5';
+  }
+  
+  // 약간의 지연 후 캡처 (DOM 리플로우 대기)
+  await new Promise(resolve => setTimeout(resolve, 100));
+  
+  const canvas = await html2canvas(el, {backgroundColor:'#0a0612', scale:3, useCORS:true, logging:false});
+  
+  // 원래 스타일 복원
+  el.style.width = origWidth;
+  el.style.height = origHeight;
+  el.style.aspectRatio = origAspect;
+  
+  return canvas;
 }
 
 function canvasToBlob(canvas) {
@@ -1649,12 +1711,32 @@ async function shareCardKakao() {
   }
 }
 
-async function shareCardInsta() {
-  const btn = document.querySelector('.modal-insta-btn');
-  const origText = btn.textContent;
-  btn.textContent = '준비 중...';
+function shareCardInsta() {
+  // 비율 선택 레이어 표시
+  const ratioLayer = document.getElementById('instaRatioLayer');
+  const defaultBtns = document.getElementById('modalDefaultBtns');
+  
+  ratioLayer.classList.remove('hidden');
+  defaultBtns.style.display = 'none';
+}
+
+function closeInstaRatioLayer() {
+  // 비율 선택 레이어 숨기기
+  const ratioLayer = document.getElementById('instaRatioLayer');
+  const defaultBtns = document.getElementById('modalDefaultBtns');
+  
+  ratioLayer.classList.add('hidden');
+  defaultBtns.style.display = 'grid';
+}
+
+async function generateAndShareInsta(ratio) {
+  const btn = event.target.closest('.insta-ratio-btn');
+  const origHTML = btn.innerHTML;
+  btn.innerHTML = '<span style="font-size:12px;">생성 중...</span>';
+  btn.disabled = true;
+  
   try {
-    const canvas = await getShareCardCanvas();
+    const canvas = await getShareCardCanvas(ratio);
     const blob = await canvasToBlob(canvas);
     const fname = getFileName('별의타로카드');
     const file = new File([blob], fname, { type: 'image/png' });
@@ -1666,15 +1748,21 @@ async function shareCardInsta() {
         title: `별의 타로 — ${selectedTopic}`,
         text: `"${shareSummary}"\n\n★ BYEOL TAROT ★`
       });
+      // 공유 후 모달 닫기
+      closeShareCard();
     } else {
       // PC 등 미지원 환경 → 이미지 저장
       downloadBlob(blob, fname);
-      setTimeout(() => alert('📸 이미지가 저장됐어요!\n인스타그램 앱에서 업로드해주세요.'), 600);
+      setTimeout(() => {
+        alert('📸 이미지가 저장됐어요!\n인스타그램 앱에서 업로드해주세요.');
+        closeShareCard();
+      }, 600);
     }
   } catch(e) {
     if (e.name !== 'AbortError') alert('공유 중 오류: ' + e.message);
+    btn.innerHTML = origHTML;
+    btn.disabled = false;
   }
-  btn.textContent = origText;
 }
 
 async function saveImage() {
