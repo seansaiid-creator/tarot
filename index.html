@@ -244,6 +244,8 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 .legal-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid rgba(201,168,76,0.2);}
 .legal-link{font-size:11px;color:var(--muted);text-decoration:none;cursor:pointer;transition:color 0.3s;}
 .legal-link:hover{color:var(--gold-light);}
+.back-btn{position:absolute;top:70px;left:20px;background:none;border:1px solid var(--gold);color:var(--gold-light);padding:8px 14px;border-radius:20px;cursor:pointer;font-size:12px;transition:all 0.3s;font-family:'Noto Serif KR',serif;}
+.back-btn:hover{background:rgba(201,168,76,0.1);box-shadow:0 0 15px rgba(201,168,76,0.2);}
 
 @media(max-width:400px){
   .topic-grid{grid-template-columns:repeat(2,1fr);}
@@ -260,9 +262,9 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 <div class="stars" id="stars"></div>
 
 <nav class="nav-tabs">
-  <div class="nav-tab active" onclick="showPage(this,'tarot')">🎴 타로 뽑기</div>
-  <div class="nav-tab" onclick="showPage(this,'about')">📖 타로란?</div>
-  <div class="nav-tab" onclick="showPage(this,'cards')">✨ 카드 의미</div>
+  <div class="nav-tab active" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); this.classList.add('active'); window.scrollTo({top:0});">🎴 타로 뽑기</div>
+  <div class="nav-tab" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active')); document.getElementById('page-about').classList.add('active'); this.classList.add('active'); window.scrollTo({top:0});">📖 타로란?</div>
+  <div class="nav-tab" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active')); document.getElementById('page-cards').classList.add('active'); this.classList.add('active'); window.scrollTo({top:0});">✨ 카드 의미</div>
 </nav>
 
 <!-- ═══ PAGE 1: DRAW ═══ -->
@@ -331,6 +333,12 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
     <div class="service-links">
       <a href="https://sajulucky.vercel.app" class="service-link" target="_blank">🔮 사주행운</a>
       <a href="https://dreams-come-true-ten.vercel.app" class="service-link" target="_blank">🌙 꿈해몽</a>
+    </div>
+    <div class="legal-links">
+      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-about-us').classList.add('active'); window.scrollTo({top:0});">소개</span>
+      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-contact').classList.add('active'); window.scrollTo({top:0});">문의</span>
+      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-privacy').classList.add('active'); window.scrollTo({top:0});">개인정보</span>
+      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-terms').classList.add('active'); window.scrollTo({top:0});">이용약관</span>
     </div>
   </div>
 </div>
@@ -519,6 +527,12 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
       <a href="https://sajulucky.vercel.app" class="service-link" target="_blank">🔮 사주행운</a>
       <a href="https://dreams-come-true-ten.vercel.app" class="service-link" target="_blank">🌙 꿈해몽</a>
     </div>
+    <div class="legal-links">
+      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-about-us').classList.add('active'); window.scrollTo({top:0});">소개</span>
+      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-contact').classList.add('active'); window.scrollTo({top:0});">문의</span>
+      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-privacy').classList.add('active'); window.scrollTo({top:0});">개인정보</span>
+      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-terms').classList.add('active'); window.scrollTo({top:0});">이용약관</span>
+    </div>
   </div>
 </div>
 </div>
@@ -561,6 +575,8 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
     <p>최종 업데이트: 2026년 3월</p>
   </div>
   <div class="divider"><span class="divider-star">✦</span></div>
+  <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
+  
   <div class="reading-box" style="margin-top: 20px;">
     <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">1. 수집하는 정보</h3>
     <p style="line-height: 1.8; margin-bottom: 15px;">별의 타로("본 웹사이트")는 다음과 같은 정보를 수집할 수 있습니다:
@@ -603,6 +619,8 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
     <p>최종 업데이트: 2026년 3월</p>
   </div>
   <div class="divider"><span class="divider-star">✦</span></div>
+  <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
+  
   <div class="reading-box" style="margin-top: 20px;">
     <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">1. 서비스 이용</h3>
     <p style="line-height: 1.8; margin-bottom: 15px;">별의 타로 서비스는 무료로 제공되며, 언제든 변경되거나 중단될 수 있습니다. 사용자는 본 이용약관에 동의함으로써 서비스를 이용할 수 있습니다.</p>
@@ -635,10 +653,12 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
     <p>별의 타로에 대한 질문이나 제안이 있으신가요?</p>
   </div>
   <div class="divider"><span class="divider-star">✦</span></div>
+  <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
+  
   <div class="reading-box" style="margin-top: 20px; text-align: center;">
     <h3 style="color: var(--gold-light); margin-bottom: 20px; font-size: 16px;">문의 방법</h3>
     <p style="line-height: 2; margin-bottom: 30px;">
-      📧 <strong>이메일:</strong> contact@byeoltarot.com<br>
+      📧 <strong>이메일:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5d3e3233293c3e291d3f24383231293c2f3229733e3230">[email&#160;protected]</a><br>
       💬 <strong>카카오톡:</strong> @별의타로<br>
       🐙 <strong>GitHub Issues:</strong> https://github.com/seansaiid-creator/tarot/issues
     </p>
@@ -664,6 +684,8 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
     <p>AI가 풀어주는 신비로운 타로의 세계</p>
   </div>
   <div class="divider"><span class="divider-star">✦</span></div>
+  <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
+  
   <div class="reading-box" style="margin-top: 20px;">
     <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">별의 타로란?</h3>
     <p style="line-height: 1.8; margin-bottom: 20px;">별의 타로는 Google Gemini AI를 활용하여 사용자의 운세를 풀어주는 웹 서비스입니다. 메이저 아르카나 22장과 마이너 아르카나 56장, 총 78장의 타로 카드로 당신의 오늘을 점쳐보세요.</p>
@@ -690,7 +712,7 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY';
 const KAKAO_APP_KEY = 'bafd38eb855743fc4e98dac2f7420be8';
 
@@ -1887,7 +1909,7 @@ function showPage(el, name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
-  el.classList.add('active');
+  if(el && el.classList) el.classList.add('active');
   window.scrollTo({top:0});
 }
 
@@ -2406,15 +2428,4 @@ function renderGallery() {
   gMinor.innerHTML = minorCards.map(card => `
     <div class="gallery-card">
       <div class="gallery-card-art">${CARD_ART[card.id] || ''}</div>
-      <div class="gallery-card-name">${card.name}</div>
-      <div class="gallery-card-num">${card.number}</div>
-      <div class="gallery-card-keyword">${card.keyword}</div>
-    </div>`).join('');
-}
-
-createStars();
-initCards();
-renderGallery();
-</script>
-</body>
-</html>
+      <div class="gallery-card-name">${
