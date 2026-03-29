@@ -3,30 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>별의 타로 — AI가 풀어주는 오늘의 운세 & 타로 카드 완전 가이드</title>
-<meta name="description" content="AI가 풀어주는 별의 타로. 메이저 아르카나 22장, 마이너 아르카나 56장으로 오늘의 운세, 연애운, 직업운, 금전운을 타로 카드로 확인하세요.">
-<meta name="keywords" content="타로, 타로점, 운세, AI 타로, 타로카드, 무료 타로, 연애운, 직업운, 금전운, 메이저 아르카나, 마이너 아르카나">
-<meta name="author" content="별의 타로">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="별의 타로 — AI가 풀어주는 오늘의 운세">
-<meta property="og:description" content="AI가 풀어주는 별의 타로. 메이저 아르카나 22장, 마이너 아르카나 56장으로 당신의 운명을 확인하세요.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://tarot-hazel-three.vercel.app">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="별의 타로 — AI 타로 뽑기">
-<meta name="twitter:description" content="AI가 풀어주는 별의 타로 운세">
+<title>별의 타로 — 오늘의 운세 & 타로 카드 완전 가이드</title>
+<meta name="description" content="AI가 풀어주는 별의 타로. 오늘의 운세, 연애운, 직업운을 타로 카드로 확인하세요.">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <!-- 카카오 SDK -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<!-- Google Analytics (측정 ID: G-XXXXXXXXXX 로 변경 필요) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
-</script>
 <style>
 :root {
   --bg:#0a0612; --surface:#120d1e; --card-bg:#1a1130;
@@ -262,9 +244,9 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 <div class="stars" id="stars"></div>
 
 <nav class="nav-tabs">
-  <div class="nav-tab active" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); this.classList.add('active'); window.scrollTo({top:0});">🎴 타로 뽑기</div>
-  <div class="nav-tab" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active')); document.getElementById('page-about').classList.add('active'); this.classList.add('active'); window.scrollTo({top:0});">📖 타로란?</div>
-  <div class="nav-tab" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active')); document.getElementById('page-cards').classList.add('active'); this.classList.add('active'); window.scrollTo({top:0});">✨ 카드 의미</div>
+  <div class="nav-tab active" onclick="showPage(this,'tarot')">🎴 타로 뽑기</div>
+  <div class="nav-tab" onclick="showPage(this,'about')">📖 타로란?</div>
+  <div class="nav-tab" onclick="showPage(this,'cards')">✨ 카드 의미</div>
 </nav>
 
 <!-- ═══ PAGE 1: DRAW ═══ -->
@@ -335,10 +317,10 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
       <a href="https://dreams-come-true-ten.vercel.app" class="service-link" target="_blank">🌙 꿈해몽</a>
     </div>
     <div class="legal-links">
-      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-about-us').classList.add('active'); window.scrollTo({top:0});">소개</span>
-      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-contact').classList.add('active'); window.scrollTo({top:0});">문의</span>
-      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-privacy').classList.add('active'); window.scrollTo({top:0});">개인정보</span>
-      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-terms').classList.add('active'); window.scrollTo({top:0});">이용약관</span>
+      <span class="legal-link" onclick="const el=document.getElementById('page-about-us'); if(el) {document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); el.classList.add('active'); window.scrollTo({top:0});}">소개</span>
+      <span class="legal-link" onclick="const el=document.getElementById('page-contact'); if(el) {document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); el.classList.add('active'); window.scrollTo({top:0});}">문의</span>
+      <span class="legal-link" onclick="const el=document.getElementById('page-privacy'); if(el) {document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); el.classList.add('active'); window.scrollTo({top:0});}">개인정보</span>
+      <span class="legal-link" onclick="const el=document.getElementById('page-terms'); if(el) {document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); el.classList.add('active'); window.scrollTo({top:0});}">이용약관</span>
     </div>
   </div>
 </div>
@@ -419,119 +401,11 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
       <li><strong>③ 내면의 울림에 집중하세요</strong>풀이를 읽으며 어떤 감정이 올라오는지 느껴보세요. 그 반응 자체가 답이에요.</li>
     </ul>
   </div>
-
-  <div class="info-card">
-    <h3>🔥 완드(Wands) — 열정과 창의성의 슈트</h3>
-    <p>완드는 불의 원소를 상징하며 <strong style="color:var(--gold-light)">열정, 창의성, 영감, 일과 커리어</strong>를 나타내요. 에너지가 넘치고 적극적인 특징이 있습니다.</p>
-    <p><strong style="color:var(--gold-light)">에이스~10:</strong> 새로운 기회부터 책임의 무게까지, 프로젝트의 전체 여정을 담아요.</p>
-    <p><strong style="color:var(--gold-light);">코트 카드:</strong> 페이지(젊은 영혼), 기사(열정적 행동), 여왕(창의력), 왕(리더십)</p>
-  </div>
-
-  <div class="info-card">
-    <h3>💧 컵(Cups) — 감정과 관계의 슈트</h3>
-    <p>컵은 물의 원소를 상징하며 <strong style="color:var(--gold-light)">감정, 사랑, 인간관계, 창의적 표현</strong>을 나타내요. 여성성과 직관적 에너지가 특징입니다.</p>
-    <p><strong style="color:var(--gold-light)">에이스~10:</strong> 새로운 감정의 시작부터 가족의 축복까지, 심정의 여정을 담아요.</p>
-    <p><strong style="color:var(--gold-light);">코트 카드:</strong> 페이지(감민함), 기사(로맨틱함), 여왕(직관력), 왕(감정적 지혜)</p>
-  </div>
-
-  <div class="info-card">
-    <h3>🌬️ 소드(Swords) — 지성과 갈등의 슈트</h3>
-    <p>소드는 공기의 원소를 상징하며 <strong style="color:var(--gold-light)">사고, 소통, 갈등, 진실, 결단</strong>을 나타내요. 분석적이고 논리적인 특징이 있습니다.</p>
-    <p><strong style="color:var(--gold-light)">에이스~10:</strong> 명확한 진실부터 절정의 고통까지, 정신적 도전을 담아요.</p>
-    <p><strong style="color:var(--gold-light);">코트 카드:</strong> 페이지(호기심), 기사(민첩함), 여왕(명확함), 왕(진실의 권력)</p>
-  </div>
-
-  <div class="info-card">
-    <h3>🌍 펜타클(Pentacles) — 물질과 성취의 슈트</h3>
-    <p>펜타클은 흙의 원소를 상징하며 <strong style="color:var(--gold-light)">돈, 물질, 현실적 성취, 건강, 일</strong>을 나타내요. 실질적이고 안정적인 특징이 있습니다.</p>
-    <p><strong style="color:var(--gold-light)">에이스~10:</strong> 새로운 부의 기회부터 유산의 축복까지, 물질적 여정을 담아요.</p>
-    <p><strong style="color:var(--gold-light);">코트 카드:</strong> 페이지(공부함), 기사(신뢰성), 여왕(풍요로움), 왕(성공과 권력)</p>
-  </div>
-
-  <div class="info-card">
-    <h3>⭐ 메이저 아르카나의 22가지 원형(Archetypes)</h3>
-    <p>메이저 아르카나의 각 카드는 인생의 중요한 주제와 영적 여정을 담아요:</p>
-    <p><strong style="color:var(--gold-light)">0-7장:</strong> 광대(시작)에서 전차(승리)까지 — 의식의 발전과 기초 세우기</p>
-    <p><strong style="color:var(--gold-light)">8-14장:</strong> 힘에서 절제까지 — 내적 성장과 자기 조절</p>
-    <p><strong style="color:var(--gold-light)">15-21장:</strong> 악마에서 세계까지 — 정화와 완성의 여정</p>
-    <p style="font-size:12px;color:var(--muted);margin-top:12px;">각 메이저 카드는 우리 인생에서 만나는 보편적인 경험과 영적 학습의 단계를 상징해요.</p>
-  </div>
-
-  <div class="info-card">
-    <h3>🎯 타로 해석 시 주의사항</h3>
-    <p><strong style="color:var(--gold-light)">1. 타로는 미래 예측 도구가 아닙니다</strong><br>타로는 현재 상황에서의 에너지를 읽고, 당신이 선택할 수 있는 길을 제시하는 도구일 뿐이에요.</p>
-    <p><strong style="color:var(--gold-light)">2. 역방향 카드는 부정이 아닙니다</strong><br>역방향은 에너지가 막혀있거나 성장의 기회를 나타낼 수 있어요.</p>
-    <p><strong style="color:var(--gold-light)">3. 같은 카드도 해석이 다릅니다</strong><br>카드의 의미는 주변 카드, 질문, 당신의 직관에 따라 달라져요.</p>
-    <p><strong style="color:var(--gold-light)">4. 자신의 직관을 믿으세요</strong><br>풀이보다 당신이 느끼는 감정과 통찰이 가장 중요해요.</p>
-  </div>
-
-  <div class="info-card">
-    <h3>❓ 자주 묻는 질문(FAQ)</h3>
-    <p><strong style="color:var(--gold-light);">Q: 타로 운세는 정말 정확하나요?</strong><br>A: 타로는 여러분의 현재 에너지와 심리 상태를 반영합니다. 정확도는 해석자의 직관과 당신의 열린 마음에 달려있어요.</p>
-    
-    <p><strong style="color:var(--gold-light);">Q: 같은 질문을 여러 번 물어봐도 되나요?</strong><br>A: 같은 질문을 반복하면 오히려 혼란스러운 결과가 나올 수 있어요. 최소 3일 이상 기간을 두고 뽑는 것을 추천합니다.</p>
-    
-    <p><strong style="color:var(--gold-light);">Q: 부정적인 카드가 나오면 나쁜 일이 생기나요?</strong><br>A: 아니에요! 어려운 카드도 성장의 기회를 나타낼 수 있어요. 당신이 이를 어떻게 받아들이는지가 중요합니다.</p>
-    
-    <p><strong style="color:var(--gold-light);">Q: 타로 카드의 배경과 역사는?</strong><br>A: 타로는 14-15세기 이탈리아에서 게임으로 시작되었고, 18세기부터 점술 도구로 발전했어요. 현재는 자기성찰과 영적 탐구의 도구로 널리 사용되고 있습니다.</p>
-  </div>
-
-  <div class="info-card">
-    <h3>💫 별의 타로의 특징</h3>
-    <p><strong style="color:var(--gold-light)">AI 기반 해석:</strong> Google Gemini AI가 각 카드 조합에 맞는 개인화된 운세를 500자 이상으로 풀어줍니다.</p>
-    <p><strong style="color:var(--gold-light)">쉬운 인터페이스:</strong> 카드를 터치하는 간단한 방식으로 과거, 현재, 미래를 읽을 수 있어요.</p>
-    <p><strong style="color:var(--gold-light)">공유 기능:</strong> 운세를 카카오톡으로 공유하거나 인스타그램용 공유 카드를 만들 수 있습니다.</p>
-    <p><strong style="color:var(--gold-light)">풍부한 교육:</strong> 타로의 역사부터 각 카드의 의미까지 배울 수 있는 가이드를 제공합니다.</p>
-  </div>
-
-  <div class="info-card">
-    <h3>🌟 시작하기</h3>
-    <p style="text-align:center;font-size:14px;color:var(--gold-light);margin:20px 0;">당신의 오늘을 점쳐보세요.<br>별의 타로는 당신의 선택을 응원합니다.</p>
-    <p style="text-align:center;"><a href="javascript:showPage(document.querySelector('.nav-tab'), 'tarot')" style="color:var(--gold-light);text-decoration:none;border-bottom:1px solid var(--gold-light);">타로 뽑기로 이동</a></p>
-  </div>
-
-  <div class="info-card">
-    <h3>📖 더 알아보기</h3>
-    <p>타로에 대해 더 알고 싶다면 다음을 추천해요:</p>
-    <p><strong style="color:var(--gold-light)">책:</strong> "타로 카드의 비밀" (에드 버튼), "라이더 웨이트 타로" (아서 웨이트)</p>
-    <p><strong style="color:var(--gold-light);">온라인 자료:</strong> 타로의 역사, 각 카드의 전통적 의미, 현대적 해석 등</p>
-    <p style="font-size:12px;color:var(--muted);margin-top:12px;"><strong>주의:</strong> 타로는 영적 탐구와 자기성찰의 도구이며, 의료 전문가의 조언을 대체할 수 없습니다.</p>
-  </div>
-
-  <div class="info-card">
-    <h3>🙏 타로 사용 윤리</h3>
-    <p>타로를 사용할 때 고려할 중요한 점들:</p>
-    <p><strong style="color:var(--gold-light)">1. 다른 사람을 위해 함부로 점치지 마세요</strong><br>상대방의 동의와 개방된 마음이 필요합니다.</p>
-    <p><strong style="color:var(--gold-light);">2. 부정적 카드를 겁먹지 마세요</strong><br>어려운 카드는 배움의 기회를 나타내요.</p>
-    <p><strong style="color:var(--gold-light);">3. 자유 의지를 존중하세요</strong><br>타로는 가능성을 보여줄 뿐, 당신의 선택을 결정하지 않습니다.</p>
-    <p><strong style="color:var(--gold-light);">4. 영적 수련으로 대합니다</strong><br>타로는 자신을 알아가는 오랜 여정의 도구일 뿐입니다.</p>
-  </div>
-
-  <div class="info-card">
-    <h3>✨ 마지막 말씀</h3>
-    <p>타로는 단순한 점술 도구가 아닙니다. 그것은 당신의 무의식과 대화하고, 삶을 다른 각도에서 바라보게 해주는 거울이에요.</p>
-    <p style="font-size:14px;color:var(--gold-light);margin-top:16px;font-style:italic;">"타로 카드가 말해주는 것은 미래가 아니라, 지금 당신이 선택할 수 있는 가능성입니다."</p>
-  </div>
-
-  <div class="info-card">
-    <h3>🌙 타로를 잘 활용하는 방법</h3>
-    <ul class="tip-list">
-      <li><strong>① 마음을 비우고 뽑으세요</strong>원하는 답을 찾으려 하기보다 카드의 메시지에 열린 마음으로 귀 기울여 보세요.</li>
-      <li><strong>② 카드를 문자 그대로 받아들이지 마세요</strong>"죽음" 카드는 나쁜 일이 아닌 변화와 새로운 시작을 의미해요.</li>
-      <li><strong>③ 내면의 울림에 집중하세요</strong>풀이를 읽으며 어떤 감정이 올라오는지 느껴보세요. 그 반응 자체가 답이에요.</li>
-    </ul>
-  </div>
   <div class="footer-links">
     <div class="footer-title">운세 시리즈</div>
     <div class="service-links">
       <a href="https://sajulucky.vercel.app" class="service-link" target="_blank">🔮 사주행운</a>
       <a href="https://dreams-come-true-ten.vercel.app" class="service-link" target="_blank">🌙 꿈해몽</a>
-    </div>
-    <div class="legal-links">
-      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-about-us').classList.add('active'); window.scrollTo({top:0});">소개</span>
-      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-contact').classList.add('active'); window.scrollTo({top:0});">문의</span>
-      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-privacy').classList.add('active'); window.scrollTo({top:0});">개인정보</span>
-      <span class="legal-link" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-terms').classList.add('active'); window.scrollTo({top:0});">이용약관</span>
     </div>
   </div>
 </div>
@@ -546,16 +420,7 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
     <p>각 카드의 상징과 의미를 알아보세요.</p>
   </div>
   <div class="divider"><span class="divider-star">✦</span></div>
-  <div class="cards-gallery" id="cardsGalleryMajor"></div>
-  
-  <!-- 마이너 아르카나 섹션 -->
-  <div class="info-hero" style="margin-top: 50px;">
-    <h2>마이너 아르카나 56장</h2>
-    <p>완드, 컵, 소드, 펜타클의 4가지 슈트</p>
-  </div>
-  <div class="divider"><span class="divider-star">✦</span></div>
-  <div class="cards-gallery" id="cardsGalleryMinor"></div>
-  
+  <div class="cards-gallery" id="cardsGallery"></div>
   <div class="footer-links">
     <div class="footer-title">운세 시리즈</div>
     <div class="service-links">
@@ -570,42 +435,30 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 <div class="page" id="page-privacy">
 <div class="container-wide">
   <div class="info-hero">
+    <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
     <div class="logo">★ Privacy Policy ★</div>
     <h2>개인정보 처리방침</h2>
     <p>최종 업데이트: 2026년 3월</p>
   </div>
   <div class="divider"><span class="divider-star">✦</span></div>
-  <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
-  
-  <div class="reading-box" style="margin-top: 20px;">
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">1. 수집하는 정보</h3>
-    <p style="line-height: 1.8; margin-bottom: 15px;">별의 타로("본 웹사이트")는 다음과 같은 정보를 수집할 수 있습니다:
-    • 자동 수집: IP 주소, 브라우저 종류, 방문 시간, 페이지 이동 경로
-    • Google Analytics를 통한 사용자 행동 분석
-    • 카카오톡 공유 시 필요한 최소한의 정보</p>
-
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">2. 쿠키 사용</h3>
-    <p style="line-height: 1.8; margin-bottom: 15px;">본 웹사이트는 Google AdSense, Google Analytics 등의 서비스를 위해 쿠키를 사용합니다. 사용자는 브라우저 설정에서 쿠키를 비활성화할 수 있습니다.</p>
-
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">3. 정보 사용</h3>
-    <p style="line-height: 1.8; margin-bottom: 15px;">수집된 정보는 다음 목적으로만 사용됩니다:
-    • 웹사이트 서비스 제공 및 개선
-    • 사용자 경험 분석
-    • 광고 맞춤 제공
-    • 통계 및 분석</p>
-
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">4. 정보 보호</h3>
-    <p style="line-height: 1.8; margin-bottom: 15px;">본 웹사이트는 SSL 암호화를 통해 데이터 전송 보안을 보장합니다. 개인정보는 제3자와 공유되지 않습니다.</p>
-
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">5. 제3자 서비스</h3>
-    <p style="line-height: 1.8; margin-bottom: 15px;">본 웹사이트는 다음 제3자 서비스를 사용합니다:
-    • Google Analytics: 사용자 행동 분석
-    • Google AdSense: 광고 게재
-    • Kakao Share: 콘텐츠 공유
-    각 서비스의 개인정보 처리방침은 해당 회사 웹사이트를 참고하세요.</p>
-
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">6. 연락처</h3>
-    <p style="line-height: 1.8;">개인정보 관련 문의: 아래 연락처로 문의하시기 바랍니다.</p>
+  <div class="reading-box">
+    <h3>1. 수집하는 정보</h3>
+    <p>별의 타로("본 웹사이트")는 다음과 같은 정보를 수집할 수 있습니다:<br>• 자동 수집: IP 주소, 브라우저 종류, 방문 시간, 페이지 이동 경로<br>• Google Analytics를 통한 사용자 행동 분석<br>• 카카오톡 공유 시 필요한 최소한의 정보</p>
+    
+    <h3>2. 쿠키 사용</h3>
+    <p>본 웹사이트는 Google AdSense, Google Analytics 등의 서비스를 위해 쿠키를 사용합니다. 사용자는 브라우저 설정에서 쿠키를 비활성화할 수 있습니다.</p>
+    
+    <h3>3. 정보 사용</h3>
+    <p>수집된 정보는 다음 목적으로만 사용됩니다:<br>• 웹사이트 서비스 제공 및 개선<br>• 사용자 경험 분석<br>• 광고 맞춤 제공<br>• 통계 및 분석</p>
+    
+    <h3>4. 정보 보호</h3>
+    <p>본 웹사이트는 SSL 암호화를 통해 데이터 전송 보안을 보장합니다. 개인정보는 제3자와 공유되지 않습니다.</p>
+    
+    <h3>5. 제3자 서비스</h3>
+    <p>본 웹사이트는 다음 제3자 서비스를 사용합니다:<br>• Google Analytics: 사용자 행동 분석<br>• Google AdSense: 광고 게재<br>• Kakao Share: 콘텐츠 공유<br>각 서비스의 개인정보 처리방침은 해당 회사 웹사이트를 참고하세요.</p>
+    
+    <h3>6. 연락처</h3>
+    <p>개인정보 관련 문의: 아래 연락처로 문의하시기 바랍니다.</p>
   </div>
 </div>
 </div>
@@ -614,32 +467,27 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 <div class="page" id="page-terms">
 <div class="container-wide">
   <div class="info-hero">
+    <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
     <div class="logo">★ Terms of Service ★</div>
     <h2>이용약관</h2>
     <p>최종 업데이트: 2026년 3월</p>
   </div>
   <div class="divider"><span class="divider-star">✦</span></div>
-  <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
-  
-  <div class="reading-box" style="margin-top: 20px;">
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">1. 서비스 이용</h3>
-    <p style="line-height: 1.8; margin-bottom: 15px;">별의 타로 서비스는 무료로 제공되며, 언제든 변경되거나 중단될 수 있습니다. 사용자는 본 이용약관에 동의함으로써 서비스를 이용할 수 있습니다.</p>
-
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">2. 금지 행위</h3>
-    <p style="line-height: 1.8; margin-bottom: 15px;">다음의 행위는 금지됩니다:
-    • 불법적인 콘텐츠 게재 또는 접근
-    • 웹사이트 해킹 또는 비인가 접근
-    • 스팸, 광고성 콘텐츠 게시
-    • 타인의 개인정보 도용</p>
-
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">3. 면책조항</h3>
-    <p style="line-height: 1.8; margin-bottom: 15px;">타로 운세는 오락 목적으로만 제공되며, 실제 상황을 예측하지 못합니다. 본 웹사이트는 사용자가 운세에 따라 내린 결정으로 인한 어떤 손해에 대해서도 책임을 지지 않습니다.</p>
-
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">4. 지적 재산권</h3>
-    <p style="line-height: 1.8; margin-bottom: 15px;">본 웹사이트의 모든 콘텐츠, 디자인, 코드는 저작권으로 보호되며 무단 복제 및 배포를 금합니다.</p>
-
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">5. 약관 변경</h3>
-    <p style="line-height: 1.8;">본 약관은 사전 통지 없이 변경될 수 있습니다. 변경 사항은 본 페이지에 공시됩니다.</p>
+  <div class="reading-box">
+    <h3>1. 서비스 이용</h3>
+    <p>별의 타로 서비스는 무료로 제공되며, 언제든 변경되거나 중단될 수 있습니다. 사용자는 본 이용약관에 동의함으로써 서비스를 이용할 수 있습니다.</p>
+    
+    <h3>2. 금지 행위</h3>
+    <p>다음 행위는 금지됩니다:<br>• 타인의 개인정보 도용<br>• 불법적인 목적의 사용<br>• 서비스 방해 행위<br>• 저작권 침해</p>
+    
+    <h3>3. 면책조항</h3>
+    <p>타로 운세는 오락 목적이며, 실제 사건의 예측이나 의료/법적 조언이 될 수 없습니다. 운세 결과로 인한 모든 결정과 책임은 사용자에게 있습니다.</p>
+    
+    <h3>4. 지적재산권</h3>
+    <p>본 웹사이트의 모든 콘텐츠는 저작권으로 보호됩니다. 허락 없이 무단 복제는 금지됩니다.</p>
+    
+    <h3>5. 약관 변경</h3>
+    <p>본 약관은 예고 없이 변경될 수 있습니다. 변경된 약관은 웹사이트에 공지됩니다.</p>
   </div>
 </div>
 </div>
@@ -648,29 +496,25 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 <div class="page" id="page-contact">
 <div class="container-wide">
   <div class="info-hero">
+    <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
     <div class="logo">★ Contact Us ★</div>
     <h2>문의하기</h2>
-    <p>별의 타로에 대한 질문이나 제안이 있으신가요?</p>
+    <p>궁금한 사항이 있으신가요?</p>
   </div>
   <div class="divider"><span class="divider-star">✦</span></div>
-  <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
-  
-  <div class="reading-box" style="margin-top: 20px; text-align: center;">
-    <h3 style="color: var(--gold-light); margin-bottom: 20px; font-size: 16px;">문의 방법</h3>
-    <p style="line-height: 2; margin-bottom: 30px;">
-      📧 <strong>이메일:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5d3e3233293c3e291d3f24383231293c2f3229733e3230">[email&#160;protected]</a><br>
-      💬 <strong>카카오톡:</strong> @별의타로<br>
-      🐙 <strong>GitHub Issues:</strong> https://github.com/seansaiid-creator/tarot/issues
-    </p>
+  <div class="reading-box">
+    <h3>📧 이메일 문의</h3>
+    <p>문의 사항은 GitHub Issues를 통해 문의해주세요.<br><a href="https://github.com/seansaiid-creator/tarot/issues" target="_blank" style="color:var(--gold-light);text-decoration:underline;">GitHub Issues 링크</a></p>
     
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">자주 묻는 질문</h3>
-    <div style="text-align: left; margin-top: 20px;">
-      <p style="margin-bottom: 15px;"><strong style="color: var(--gold-light);">Q: 타로 운세의 정확도는 어떻게 되나요?</strong><br>A: 본 서비스는 오락 목적으로 AI 기술을 활용한 재미있는 경험을 제공합니다.</p>
-      
-      <p style="margin-bottom: 15px;"><strong style="color: var(--gold-light);">Q: 개인정보가 안전한가요?</strong><br>A: 본 웹사이트는 SSL 암호화를 사용하며, 개인정보는 수집되지 않습니다.</p>
-      
-      <p><strong style="color: var(--gold-light);">Q: 광고를 없애 수 있나요?</strong><br>A: 현재 광고는 필수이며, 향후 유료 버전 추가를 검토 중입니다.</p>
-    </div>
+    <h3>💬 자주 묻는 질문</h3>
+    <p><strong>Q: 타로 운세가 정확한가요?</strong><br>A: 타로는 오락 목적이며, 현재 상황을 성찰하는 도구입니다.</p>
+    
+    <p><strong>Q: 광고가 있나요?</strong><br>A: 네, Google AdSense 광고가 표시됩니다.</p>
+    
+    <p><strong>Q: 개인정보는 안전한가요?</strong><br>A: 네, 개인정보는 수집되지 않으며 Google Analytics만 사용합니다.</p>
+    
+    <h3>🔗 관련 서비스</h3>
+    <p>다른 운세 서비스도 확인해보세요:<br>• <a href="https://sajulucky.vercel.app" target="_blank" style="color:var(--gold-light);text-decoration:underline;">사주행운</a><br>• <a href="https://dreams-come-true-ten.vercel.app" target="_blank" style="color:var(--gold-light);text-decoration:underline;">꿈해몽</a></p>
   </div>
 </div>
 </div>
@@ -679,40 +523,32 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 <div class="page" id="page-about-us">
 <div class="container-wide">
   <div class="info-hero">
+    <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
     <div class="logo">★ About Us ★</div>
     <h2>별의 타로 소개</h2>
     <p>AI가 풀어주는 신비로운 타로의 세계</p>
   </div>
   <div class="divider"><span class="divider-star">✦</span></div>
-  <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
-  
-  <div class="reading-box" style="margin-top: 20px;">
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">별의 타로란?</h3>
-    <p style="line-height: 1.8; margin-bottom: 20px;">별의 타로는 Google Gemini AI를 활용하여 사용자의 운세를 풀어주는 웹 서비스입니다. 메이저 아르카나 22장과 마이너 아르카나 56장, 총 78장의 타로 카드로 당신의 오늘을 점쳐보세요.</p>
-
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">기능</h3>
-    <p style="line-height: 1.8; margin-bottom: 20px;">
-    • 🎴 3장의 카드를 뽑아 과거, 현재, 미래를 알아봅니다<br>
-    • 🤖 Google Gemini AI가 500자 이상의 상세한 풀이를 제공합니다<br>
-    • 📱 카카오톡으로 운세를 공유할 수 있습니다<br>
-    • 🖼️ 인스타그램 스토리용 공유 카드를 만들 수 있습니다<br>
-    • 📚 타로의 역사와 각 카드의 의미를 배울 수 있습니다
-    </p>
-
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">개발자</h3>
-    <p style="line-height: 1.8; margin-bottom: 20px;">GitHub: <a href="https://github.com/seansaiid-creator" target="_blank" style="color: var(--gold-light);">@seansaiid-creator</a></p>
-
-    <h3 style="color: var(--gold-light); margin-bottom: 15px; font-size: 16px;">관련 서비스</h3>
-    <p style="line-height: 1.8;">
-    • 찰떡사주: https://chaldduk-saju.vercel.app<br>
-    • 사주행운: https://sajulucky.vercel.app<br>
-    • 꿈해몽 행운: https://dreams-come-true-ten.vercel.app
-    </p>
+  <div class="reading-box">
+    <h3>별의 타로란?</h3>
+    <p>별의 타로는 Google Gemini AI를 활용하여 사용자의 운세를 풀어주는 웹 서비스입니다. 메이저 아르카나 22장과 마이너 아르카나 56장, 총 78장의 타로 카드로 당신의 오늘을 점쳐보세요.</p>
+    
+    <h3>🎯 주요 기능</h3>
+    <p>• 🎴 3장의 카드를 뽑아 과거, 현재, 미래를 알아봅니다<br>• 🤖 Google Gemini AI가 500자 이상의 상세한 풀이를 제공합니다<br>• 📱 카카오톡으로 운세를 공유할 수 있습니다<br>• 🖼️ 인스타그램 스토리용 공유 카드를 만들 수 있습니다<br>• 📚 타로의 역사와 각 카드의 의미를 배울 수 있습니다</p>
+    
+    <h3>✨ 기술 스택</h3>
+    <p>• 프론트엔드: 순수 바닐라 JavaScript (프레임워크 없음)<br>• AI: Google Gemini API (gemini-pro)<br>• 배포: Vercel<br>• 공유: Kakao SDK, Html2Canvas</p>
+    
+    <h3>🎓 타로에 대해 배우세요</h3>
+    <p>상단 메뉴의 "타로란?" 페이지에서 타로의 역사, 78장의 카드 구성, 각 슈트의 의미 등을 배울 수 있습니다.</p>
+    
+    <h3>💡 마지막 말씀</h3>
+    <p>타로는 미래를 정확히 예측하는 도구가 아닙니다. 현재 상황을 성찰하고 새로운 관점을 제시하는 영적 도구일 뿐입니다. 당신의 선택이 가장 중요합니다.</p>
   </div>
 </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY';
 const KAKAO_APP_KEY = 'bafd38eb855743fc4e98dac2f7420be8';
 
@@ -1909,7 +1745,7 @@ function showPage(el, name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
-  if(el && el.classList) el.classList.add('active');
+  el.classList.add('active');
   window.scrollTo({top:0});
 }
 
@@ -2411,21 +2247,67 @@ function resetApp() {
 }
 
 function renderGallery() {
-  // 메이저 아르카나 (0-21)
-  const majorCards = TAROT_CARDS.filter(card => card.id <= 21);
-  const gMajor = document.getElementById('cardsGalleryMajor');
-  gMajor.innerHTML = majorCards.map(card => `
+  const g = document.getElementById('cardsGallery');
+  g.innerHTML = TAROT_CARDS.map(card => `
     <div class="gallery-card">
       <div class="gallery-card-art">${CARD_ART[card.id] || ''}</div>
       <div class="gallery-card-name">${card.name}</div>
       <div class="gallery-card-num">${card.number}</div>
       <div class="gallery-card-keyword">${card.keyword}</div>
     </div>`).join('');
-  
-  // 마이너 아르카나 (22-77)
-  const minorCards = TAROT_CARDS.filter(card => card.id > 21);
-  const gMinor = document.getElementById('cardsGalleryMinor');
-  gMinor.innerHTML = minorCards.map(card => `
-    <div class="gallery-card">
-      <div class="gallery-card-art">${CARD_ART[card.id] || ''}</div>
-      <div class="gallery-card-name">${
+}
+
+createStars();
+initCards();
+renderGallery();
+</script>
+</body>
+</html>
+  // 컵(Cups) 슈트 (36-49): 간단한 컵 모양
+  36: svgCard(`<circle cx="50" cy="40" r="14" fill="none" stroke="#4a90e2" stroke-width="2"/><path d="M40 20 Q45 15 50 20 Q55 15 60 20 Q55 30 50 32 Q45 30 40 20" fill="#4a90e2"/><line x1="45" y1="35" x2="45" y2="75" stroke="#4a90e2" stroke-width="2"/><line x1="55" y1="35" x2="55" y2="75" stroke="#4a90e2" stroke-width="2"/><text x="50" y="155" font-size="11" fill="#4a90e2">1</text>`, '#0a1a3a','#050a15'),
+  37: svgCard(`<path d="M30 45 Q25 40 25 55 Q25 65 35 68 Q40 70 40 55" fill="none" stroke="#4a90e2" stroke-width="2"/><path d="M70 45 Q75 40 75 55 Q75 65 65 68 Q60 70 60 55" fill="none" stroke="#4a90e2" stroke-width="2"/><text x="50" y="155" font-size="11" fill="#4a90e2">2</text>`, '#0a1a3a','#050a15'),
+  38: svgCard(`<path d="M25 50 Q20 45 20 60 Q20 70 30 73 Q35 75 35 60" fill="none" stroke="#4a90e2" stroke-width="1.8"/><path d="M50 35 Q45 30 45 50 Q45 62 55 65 Q60 67 60 50" fill="none" stroke="#4a90e2" stroke-width="2"/><path d="M75 50 Q70 45 70 60 Q70 70 80 73" fill="none" stroke="#4a90e2" stroke-width="1.8"/><text x="50" y="155" font-size="11" fill="#4a90e2">3</text>`, '#0a1a3a','#050a15'),
+  39: svgCard(`<path d="M50 40 Q45 35 45 55 Q45 70 55 73 Q60 75 60 55" fill="none" stroke="#4a90e2" stroke-width="2" opacity="0.6"/><path d="M30 90 L70 90" stroke="#5a5a7a" stroke-width="1" opacity="0.5"/><text x="50" y="155" font-size="11" fill="#4a90e2">4</text>`, '#0a1a3a','#050a15'),
+  40: svgCard(`<path d="M20 50 Q15 45 15 55 Q15 65 25 68"/><path d="M40 50 Q35 45 35 60 Q35 70 45 73"/><path d="M50 45 Q45 40 45 55 Q45 68 55 71"/><path d="M65 50 Q60 45 60 60 Q60 70 70 73"/><path d="M80 50 Q75 45 75 55" fill="none" stroke="#4a90e2" stroke-width="1.5" opacity="0.6"/><text x="50" y="155" font-size="11" fill="#4a90e2">5</text>`, '#0a1a3a','#050a15'),
+  41: svgCard(`<path d="M25 55 Q20 50 20 65 Q20 75 30 78"/><path d="M75 55 Q70 50 70 65 Q70 75 80 78"/><path d="M50 40 Q45 35 45 55 Q45 68 55 71" fill="none" stroke="#4a90e2" stroke-width="2"/><text x="50" y="155" font-size="11" fill="#4a90e2">6</text>`, '#0a1a3a','#050a15'),
+  42: svgCard(`<path d="M30 50 Q25 45 25 60 Q25 70 35 73"/><path d="M50 40 Q45 35 45 55 Q45 68 55 71"/><path d="M70 50 Q65 45 65 60 Q65 70 75 73" fill="none" stroke="#4a90e2" stroke-width="1.6"/><text x="50" y="155" font-size="11" fill="#4a90e2">7</text>`, '#0a1a3a','#050a15'),
+  43: svgCard(`<path d="M20 55 Q15 50 15 65"/><path d="M50 45 Q45 40 45 55 Q45 68 55 71"/><path d="M80 55 Q75 50 75 65" fill="none" stroke="#4a90e2" stroke-width="1.6" opacity="0.7"/><path d="M30 40 L80 80" stroke="#7a7a9a" stroke-width="1" opacity="0.6"/><text x="50" y="155" font-size="11" fill="#4a90e2">8</text>`, '#0a1a3a','#050a15'),
+  44: svgCard(`<path d="M15 55 Q10 50 10 65"/><path d="M30 48 Q25 43 25 58"/><path d="M50 42 Q45 37 45 52 Q45 65 53 68"/><path d="M70 48 Q65 43 65 58"/><path d="M85 55 Q80 50 80 65" fill="none" stroke="#4a90e2" stroke-width="1.4"/><circle cx="50" cy="55" r="8" fill="none" stroke="#6ba3e8"/><text x="50" y="155" font-size="11" fill="#4a90e2">9</text>`, '#0a1a3a','#050a15'),
+  45: svgCard(`<path d="M10 60 Q5 55 5 70"/><path d="M25 52 Q20 47 20 62"/><path d="M40 46 Q35 41 35 56"/><path d="M55 42 Q50 37 50 52"/><path d="M70 46 Q65 41 65 56"/><path d="M85 52 Q80 47 80 62"/><path d="M100 60 Q95 55 95 70" fill="none" stroke="#4a90e2" stroke-width="1.3"/><path d="M10 85 L100 85" stroke="#c9a84c" stroke-width="1.5" opacity="0.7"/><text x="50" y="155" font-size="11" fill="#4a90e2">10</text>`, '#0a1a3a','#050a15'),
+  46: svgCard(`<circle cx="50" cy="32" r="8" fill="none" stroke="#6ba3e8" stroke-width="1.5"/><line x1="50" y1="40" x2="50" y2="95" stroke="#6ba3e8" stroke-width="1.5"/><text x="50" y="155" font-size="9" fill="#4a90e2">P</text>`, '#0a1a3a','#050a15'),
+  47: svgCard(`<circle cx="50" cy="30" r="9" fill="none" stroke="#6ba3e8" stroke-width="1.5"/><line x1="50" y1="39" x2="50" y2="100" stroke="#6ba3e8" stroke-width="1.5"/><path d="M65 45 Q80 40 85 50" fill="none" stroke="#4a90e2" stroke-width="2.2"/><text x="50" y="155" font-size="9" fill="#4a90e2">K</text>`, '#0a1a3a','#050a15'),
+  48: svgCard(`<circle cx="50" cy="28" r="10" fill="none" stroke="#6ba3e8" stroke-width="1.5"/><path d="M45 15 L55 15 L53 22" fill="#6ba3e8" opacity="0.8"/><line x1="50" y1="38" x2="50" y2="108" stroke="#6ba3e8" stroke-width="1.5"/><text x="50" y="155" font-size="9" fill="#4a90e2">Q</text>`, '#0a1a3a','#050a15'),
+  49: svgCard(`<circle cx="50" cy="26" r="11" fill="none" stroke="#6ba3e8" stroke-width="1.5"/><path d="M45 10 L55 10 L50 18 Z" fill="#6ba3e8" opacity="0.9"/><line x1="50" y1="37" x2="50" y2="80" stroke="#6ba3e8" stroke-width="1.8"/><line x1="70" y1="50" x2="90" y2="55" stroke="#4a90e2" stroke-width="2.2"/><text x="50" y="155" font-size="9" fill="#4a90e2">K</text>`, '#0a1a3a','#050a15'),
+
+  // 소드(Swords) 슈트 (50-63): 간단한 검 모양
+  50: svgCard(`<line x1="50" y1="15" x2="50" y2="105" stroke="#e8e0f5" stroke-width="2.5"/><path d="M45 30 L50 20 L55 30 Z" fill="#f0d080"/><text x="50" y="155" font-size="11" fill="#e8e0f5">1</text>`, '#1a1a2e','#0a0a15'),
+  51: svgCard(`<line x1="35" y1="30" x2="45" y2="105" stroke="#e8e0f5" stroke-width="2"/><line x1="65" y1="30" x2="55" y2="105" stroke="#c4a8ff" stroke-width="2"/><path d="M35 30 L30 20 L40 25 Z" fill="#f0d080"/><text x="50" y="155" font-size="11" fill="#e8e0f5">2</text>`, '#1a1a2e','#0a0a15'),
+  52: svgCard(`<line x1="28" y1="40" x2="35" y2="105" stroke="#e8e0f5" stroke-width="1.8" opacity="0.7"/><line x1="50" y1="25" x2="50" y2="105" stroke="#c4a8ff" stroke-width="2.2"/><line x1="72" y1="40" x2="65" y2="105" stroke="#e8e0f5" stroke-width="1.8" opacity="0.7"/><text x="50" y="155" font-size="11" fill="#e8e0f5">3</text>`, '#1a1a2e','#0a0a15'),
+  53: svgCard(`<line x1="50" y1="30" x2="50" y2="110" stroke="#c4a8ff" stroke-width="2"/><rect x="30" y="115" width="40" height="3" fill="#e8e0f5" opacity="0.5"/><text x="50" y="155" font-size="11" fill="#e8e0f5">4</text>`, '#1a1a2e','#0a0a15'),
+  54: svgCard(`<line x1="18" y1="45" x2="28" y2="110" stroke="#e8e0f5" stroke-width="2"/><line x1="50" y1="28" x2="50" y2="110" stroke="#c4a8ff" stroke-width="2.2"/><line x1="82" y1="45" x2="72" y2="110" stroke="#e8e0f5" stroke-width="2"/><circle cx="50" cy="55" r="6" fill="none" stroke="#9b7de8"/><text x="50" y="155" font-size="11" fill="#e8e0f5">5</text>`, '#1a1a2e','#0a0a15'),
+  55: svgCard(`<path d="M50 20 L45 35 L55 35 Z" fill="#f0d080" opacity="0.7"/><line x1="50" y1="35" x2="50" y2="110" stroke="#c4a8ff" stroke-width="2.2"/><path d="M30 60 Q40 55 50 65" fill="none" stroke="#e8e0f5" stroke-width="1.2" opacity="0.6"/><text x="50" y="155" font-size="11" fill="#e8e0f5">6</text>`, '#1a1a2e','#0a0a15'),
+  56: svgCard(`<line x1="45" y1="32" x2="45" y2="110" stroke="#c4a8ff" stroke-width="1.8"/><line x1="50" y1="25" x2="50" y2="110" stroke="#c4a8ff" stroke-width="2"/><line x1="55" y1="32" x2="55" y2="110" stroke="#c4a8ff" stroke-width="1.8"/><path d="M50 20 L45 30 L55 30 Z" fill="#f0d080" opacity="0.6"/><text x="50" y="155" font-size="11" fill="#e8e0f5">7</text>`, '#1a1a2e','#0a0a15'),
+  57: svgCard(`<line x1="42" y1="35" x2="42" y2="110" stroke="#c4a8ff" stroke-width="1.7"/><line x1="50" y1="28" x2="50" y2="110" stroke="#c4a8ff" stroke-width="1.8"/><line x1="58" y1="35" x2="58" y2="110" stroke="#c4a8ff" stroke-width="1.7"/><rect x="40" y="50" width="20" height="30" fill="none" stroke="#9b7de8" stroke-width="1" opacity="0.5"/><text x="50" y="155" font-size="11" fill="#e8e0f5">8</text>`, '#1a1a2e','#0a0a15'),
+  58: svgCard(`<line x1="40" y1="38" x2="40" y2="110" stroke="#c4a8ff" stroke-width="1.6"/><line x1="50" y1="30" x2="50" y2="110" stroke="#c4a8ff" stroke-width="1.8"/><line x1="60" y1="38" x2="60" y2="110" stroke="#c4a8ff" stroke-width="1.6"/><circle cx="50" cy="50" r="10" fill="none" stroke="#9b7de8" stroke-width="1.2" opacity="0.5"/><text x="50" y="155" font-size="11" fill="#e8e0f5">9</text>`, '#1a1a2e','#0a0a15'),
+  59: svgCard(`<line x1="45" y1="32" x2="45" y2="110" stroke="#c4a8ff" stroke-width="1.7"/><line x1="50" y1="25" x2="50" y2="110" stroke="#c4a8ff" stroke-width="1.9"/><line x1="55" y1="32" x2="55" y2="110" stroke="#c4a8ff" stroke-width="1.7"/><path d="M50 25 L45 35 L55 35 Z" fill="#9b7de8" opacity="0.8"/><text x="50" y="155" font-size="11" fill="#e8e0f5">10</text>`, '#1a1a2e','#0a0a15'),
+  60: svgCard(`<circle cx="50" cy="32" r="8" fill="none" stroke="#e8e0f5" stroke-width="1.5"/><line x1="50" y1="40" x2="50" y2="72" stroke="#e8e0f5" stroke-width="1.5"/><line x1="62" y1="50" x2="78" y2="50" stroke="#c4a8ff" stroke-width="1.8"/><text x="50" y="155" font-size="9" fill="#e8e0f5">P</text>`, '#1a1a2e','#0a0a15'),
+  61: svgCard(`<circle cx="50" cy="30" r="9" fill="none" stroke="#e8e0f5" stroke-width="1.5"/><line x1="50" y1="39" x2="50" y2="75" stroke="#e8e0f5" stroke-width="1.5"/><line x1="65" y1="45" x2="80" y2="55" stroke="#c4a8ff" stroke-width="2.2"/><text x="50" y="155" font-size="9" fill="#e8e0f5">K</text>`, '#1a1a2e','#0a0a15'),
+  62: svgCard(`<circle cx="50" cy="28" r="10" fill="none" stroke="#e8e0f5" stroke-width="1.5"/><path d="M45 14 L55 14 L53 22" fill="#e8e0f5" opacity="0.8"/><line x1="50" y1="38" x2="50" y2="78" stroke="#e8e0f5" stroke-width="1.5"/><line x1="65" y1="50" x2="80" y2="50" stroke="#c4a8ff" stroke-width="1.8"/><text x="50" y="155" font-size="9" fill="#e8e0f5">Q</text>`, '#1a1a2e','#0a0a15'),
+  63: svgCard(`<circle cx="50" cy="26" r="11" fill="none" stroke="#e8e0f5" stroke-width="1.5"/><path d="M45 10 L55 10 L50 18 Z" fill="#e8e0f5" opacity="0.9"/><line x1="50" y1="37" x2="50" y2="80" stroke="#e8e0f5" stroke-width="1.8"/><line x1="68" y1="50" x2="85" y2="55" stroke="#c4a8ff" stroke-width="2.2"/><text x="50" y="155" font-size="9" fill="#e8e0f5">K</text>`, '#1a1a2e','#0a0a15'),
+
+  // 펜타클(Pentacles) 슈트 (64-77): 간단한 동전 모양
+  64: svgCard(`<circle cx="50" cy="40" r="14" fill="none" stroke="#52d152" stroke-width="2"/><circle cx="50" cy="40" r="10" fill="#2a4a2a" opacity="0.6"/><path d="M50 28 L55 38 L47 38 Z" fill="#f0d080" opacity="0.9"/><text x="50" y="155" font-size="11" fill="#52d152">1</text>`, '#0a2a0a','#050a05'),
+  65: svgCard(`<circle cx="32" cy="50" r="10" fill="none" stroke="#52d152" stroke-width="1.8"/><circle cx="68" cy="50" r="10" fill="none" stroke="#52d152" stroke-width="1.8"/><path d="M35 55 Q50 70 65 55" fill="none" stroke="#52d152" stroke-width="1.5" opacity="0.6"/><text x="50" y="155" font-size="11" fill="#52d152">2</text>`, '#0a2a0a','#050a05'),
+  66: svgCard(`<circle cx="25" cy="60" r="9" fill="none" stroke="#52d152" stroke-width="1.7"/><circle cx="50" cy="40" r="10" fill="none" stroke="#52d152" stroke-width="1.8"/><circle cx="75" cy="60" r="9" fill="none" stroke="#52d152" stroke-width="1.7"/><path d="M25 69 L50 50 L75 69" fill="none" stroke="#52d152" stroke-width="1" opacity="0.5"/><text x="50" y="155" font-size="11" fill="#52d152">3</text>`, '#0a2a0a','#050a05'),
+  67: svgCard(`<circle cx="28" cy="45" r="8" fill="none" stroke="#52d152" stroke-width="1.6"/><circle cx="72" cy="45" r="8" fill="none" stroke="#52d152" stroke-width="1.6"/><circle cx="28" cy="80" r="8" fill="none" stroke="#52d152" stroke-width="1.6"/><circle cx="72" cy="80" r="8" fill="none" stroke="#52d152" stroke-width="1.6"/><rect x="20" y="37" width="60" height="56" fill="none" stroke="#52d152" stroke-width="1.2" opacity="0.5"/><text x="50" y="155" font-size="11" fill="#52d152">4</text>`, '#0a2a0a','#050a05'),
+  68: svgCard(`<circle cx="18" cy="55" r="7" fill="none" stroke="#52d152" stroke-width="1.5" opacity="0.6"/><circle cx="35" cy="40" r="7.5" fill="none" stroke="#52d152" stroke-width="1.6"/><circle cx="50" cy="30" r="8" fill="none" stroke="#52d152" stroke-width="1.7"/><circle cx="65" cy="40" r="7.5" fill="none" stroke="#52d152" stroke-width="1.6"/><circle cx="82" cy="55" r="7" fill="none" stroke="#52d152" stroke-width="1.5" opacity="0.6"/><path d="M35 50 L50 80 L65 50" fill="none" stroke="#9b7de8" stroke-width="1.2" opacity="0.5"/><text x="50" y="155" font-size="11" fill="#52d152">5</text>`, '#0a2a0a','#050a05'),
+  69: svgCard(`<circle cx="18" cy="48" r="7" fill="none" stroke="#52d152" stroke-width="1.5"/><circle cx="35" cy="35" r="7.5" fill="none" stroke="#52d152" stroke-width="1.6"/><circle cx="65" cy="35" r="7.5" fill="none" stroke="#52d152" stroke-width="1.6"/><circle cx="82" cy="48" r="7" fill="none" stroke="#52d152" stroke-width="1.5"/><circle cx="27" cy="75" r="7" fill="none" stroke="#52d152" stroke-width="1.5"/><circle cx="73" cy="75" r="7" fill="none" stroke="#52d152" stroke-width="1.5"/><path d="M35 42 L50 65 L65 42" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.6"/><text x="50" y="155" font-size="11" fill="#52d152">6</text>`, '#0a2a0a','#050a05'),
+  70: svgCard(`<circle cx="20" cy="65" r="6" fill="none" stroke="#52d152" stroke-width="1.4" opacity="0.6"/><circle cx="32" cy="45" r="7" fill="none" stroke="#52d152" stroke-width="1.5"/><circle cx="48" cy="30" r="7.5" fill="none" stroke="#52d152" stroke-width="1.6"/><circle cx="50" cy="65" r="7" fill="none" stroke="#52d152" stroke-width="1.6"/><circle cx="68" cy="45" r="7" fill="none" stroke="#52d152" stroke-width="1.5"/><circle cx="80" cy="65" r="6" fill="none" stroke="#52d152" stroke-width="1.4" opacity="0.6"/><path d="M32 52 L50 72 L68 52" fill="none" stroke="#9b7de8" stroke-width="1" opacity="0.5"/><text x="50" y="155" font-size="11" fill="#52d152">7</text>`, '#0a2a0a','#050a05'),
+  71: svgCard(`<circle cx="50" cy="25" r="7.5" fill="none" stroke="#52d152" stroke-width="1.6"/><circle cx="42" cy="35" r="7" fill="none" stroke="#52d152" stroke-width="1.5"/><circle cx="58" cy="35" r="7" fill="none" stroke="#52d152" stroke-width="1.5"/><circle cx="35" cy="47" r="6" fill="none" stroke="#52d152" stroke-width="1.4"/><circle cx="65" cy="47" r="6" fill="none" stroke="#52d152" stroke-width="1.4"/><path d="M42 42 L50 50 L58 42" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.6"/><text x="50" y="155" font-size="11" fill="#52d152">8</text>`, '#0a2a0a','#050a05'),
+  72: svgCard(`<circle cx="50" cy="30" r="7" fill="none" stroke="#52d152" stroke-width="1.6"/><circle cx="38" cy="40" r="6.5" fill="none" stroke="#52d152" stroke-width="1.5"/><circle cx="62" cy="40" r="6.5" fill="none" stroke="#52d152" stroke-width="1.5"/><circle cx="25" cy="55" r="6" fill="none" stroke="#52d152" stroke-width="1.4"/><circle cx="75" cy="55" r="6" fill="none" stroke="#52d152" stroke-width="1.4"/><circle cx="50" cy="65" r="7" fill="none" stroke="#52d152" stroke-width="1.6"/><circle cx="50" cy="50" r="6" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.7"/><text x="50" y="155" font-size="11" fill="#52d152">9</text>`, '#0a2a0a','#050a05'),
+  73: svgCard(`<circle cx="50" cy="22" r="7" fill="none" stroke="#52d152" stroke-width="1.6"/><circle cx="35" cy="47" r="6" fill="none" stroke="#52d152" stroke-width="1.4"/><circle cx="65" cy="47" r="6" fill="none" stroke="#52d152" stroke-width="1.4"/><circle cx="20" cy="80" r="4.5" fill="none" stroke="#52d152" stroke-width="1.1" opacity="0.3"/><circle cx="80" cy="80" r="4.5" fill="none" stroke="#52d152" stroke-width="1.1" opacity="0.3"/><path d="M45 20 L50 10 L55 20" fill="#f0d080" opacity="0.9"/><path d="M35 35 L50 45 L65 35" fill="none" stroke="#c9a84c" stroke-width="1.2" opacity="0.7"/><text x="50" y="155" font-size="11" fill="#52d152">10</text>`, '#0a2a0a','#050a05'),
+  74: svgCard(`<circle cx="50" cy="32" r="8" fill="none" stroke="#52d152" stroke-width="1.5"/><line x1="50" y1="40" x2="50" y2="72" stroke="#52d152" stroke-width="1.5"/><circle cx="68" cy="50" r="5" fill="none" stroke="#52d152" stroke-width="1.5"/><text x="50" y="155" font-size="9" fill="#52d152">P</text>`, '#0a2a0a','#050a05'),
+  75: svgCard(`<circle cx="50" cy="30" r="9" fill="none" stroke="#52d152" stroke-width="1.5"/><line x1="50" y1="39" x2="50" y2="75" stroke="#52d152" stroke-width="1.5"/><circle cx="70" cy="50" r="6" fill="none" stroke="#52d152" stroke-width="1.6"/><path d="M70 45 L75 50 L70 55" fill="#52d152" opacity="0.8"/><text x="50" y="155" font-size="9" fill="#52d152">K</text>`, '#0a2a0a','#050a05'),
+  76: svgCard(`<circle cx="50" cy="28" r="10" fill="none" stroke="#52d152" stroke-width="1.5"/><path d="M45 14 L55 14 L53 22" fill="#52d152" opacity="0.8"/><line x1="50" y1="38" x2="50" y2="78" stroke="#52d152" stroke-width="1.5"/><circle cx="68" cy="55" r="6" fill="none" stroke="#52d152" stroke-width="1.6"/><path d="M68 48 L72 55 L68 62" fill="#52d152" opacity="0.8"/><text x="50" y="155" font-size="9" fill="#52d152">Q</text>`, '#0a2a0a','#050a05'),
+  77: svgCard(`<circle cx="50" cy="26" r="11" fill="none" stroke="#52d152" stroke-width="1.5"/><path d="M45 10 L55 10 L50 18 Z" fill="#52d152" opacity="0.9"/><circle cx="45" cy="13" r="1.5" fill="#52d152"/><circle cx="55" cy="13" r="1.5" fill="#52d152"/><line x1="50" y1="37" x2="50" y2="80" stroke="#52d152" stroke-width="1.8"/><circle cx="72" cy="55" r="7" fill="none" stroke="#52d152" stroke-width="1.7"/><path d="M72 48 L78 55 L72 62" fill="#52d152" opacity="0.9"/><text x="50" y="155" font-size="9" fill="#52d152">K</text>`, '#0a2a0a','#050a05'),
+};
