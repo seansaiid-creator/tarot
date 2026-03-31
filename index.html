@@ -237,6 +237,17 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 .gallery-card-num{font-size:10px;color:var(--muted);text-align:center;}
 .gallery-card-keyword{font-size:10px;color:var(--purple-light);text-align:center;margin-top:2px;}
 
+
+/* ── 서비스 연결 블록 ── */
+.bridge-section{margin-top:18px;display:grid;grid-template-columns:1fr;gap:12px;}
+.bridge-card{display:block;text-decoration:none;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;transition:all 0.3s;position:relative;overflow:hidden;}
+.bridge-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top right,rgba(155,125,232,0.10),transparent 55%);pointer-events:none;}
+.bridge-card:hover{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 8px 24px rgba(0,0,0,0.18);}
+.bridge-kicker{font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;position:relative;z-index:1;}
+.bridge-title{font-size:15px;color:var(--text);line-height:1.6;margin-bottom:6px;position:relative;z-index:1;}
+.bridge-desc{font-size:12px;color:var(--muted);line-height:1.7;position:relative;z-index:1;}
+.bridge-section-title{font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;text-align:center;margin:18px 0 10px;}
+
 /* FOOTER */
 .footer-links{text-align:center;margin-top:40px;padding-top:24px;border-top:1px solid var(--border);}
 .footer-title{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:14px;}
@@ -314,6 +325,9 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
       </div>
     </div>
 
+    <div class="bridge-section-title">운세를 더 이어서 보세요</div>
+    <div class="bridge-section" id="bridgeSection"></div>
+
     <!-- 인스타 공유 카드 버튼 -->
     <button class="share-card-btn" onclick="openShareCard()">
       ✨ 오늘의 타로 공유 카드 만들기
@@ -333,8 +347,8 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
   <div class="footer-links">
     <div class="footer-title">운세 시리즈</div>
     <div class="service-links">
-      <a href="https://sajulucky.vercel.app" class="service-link" target="_blank">🔮 사주행운</a>
-      <a href="https://dreams-come-true-ten.vercel.app" class="service-link" target="_blank">🌙 꿈해몽</a>
+      <a href="https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=internal_link&utm_campaign=fortune_network" class="service-link js-track-service" data-service="sajulucky" target="_blank" rel="noopener">🔮 사주행운</a>
+      <a href="https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=internal_link&utm_campaign=fortune_network" class="service-link js-track-service" data-service="dreams" target="_blank" rel="noopener">🌙 꿈해몽</a>
     </div>
     <div class="legal-links">
       <span class="legal-link" onclick="navigateTo('about-us')">소개</span>
@@ -424,8 +438,8 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
   <div class="footer-links">
     <div class="footer-title">운세 시리즈</div>
     <div class="service-links">
-      <a href="https://sajulucky.vercel.app" class="service-link" target="_blank">🔮 사주행운</a>
-      <a href="https://dreams-come-true-ten.vercel.app" class="service-link" target="_blank">🌙 꿈해몽</a>
+      <a href="https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=internal_link&utm_campaign=fortune_network" class="service-link js-track-service" data-service="sajulucky" target="_blank" rel="noopener">🔮 사주행운</a>
+      <a href="https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=internal_link&utm_campaign=fortune_network" class="service-link js-track-service" data-service="dreams" target="_blank" rel="noopener">🌙 꿈해몽</a>
     </div>
   </div>
 </div>
@@ -444,8 +458,8 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
   <div class="footer-links">
     <div class="footer-title">운세 시리즈</div>
     <div class="service-links">
-      <a href="https://sajulucky.vercel.app" class="service-link" target="_blank">🔮 사주행운</a>
-      <a href="https://dreams-come-true-ten.vercel.app" class="service-link" target="_blank">🌙 꿈해몽</a>
+      <a href="https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=internal_link&utm_campaign=fortune_network" class="service-link js-track-service" data-service="sajulucky" target="_blank" rel="noopener">🔮 사주행운</a>
+      <a href="https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=internal_link&utm_campaign=fortune_network" class="service-link js-track-service" data-service="dreams" target="_blank" rel="noopener">🌙 꿈해몽</a>
     </div>
   </div>
 </div>
@@ -534,7 +548,7 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
     <p><strong>Q: 개인정보는 안전한가요?</strong><br>A: 서비스 개선과 통계 분석을 위해 Google Analytics를 사용할 수 있으며, 향후 Google AdSense 운영 시 쿠키 기반 광고 기술이 적용될 수 있습니다.</p>
     
     <h3>🔗 관련 서비스</h3>
-    <p>다른 운세 서비스도 확인해보세요:<br>• <a href="https://sajulucky.vercel.app" target="_blank" style="color:var(--gold-light);text-decoration:underline;">사주행운</a><br>• <a href="https://dreams-come-true-ten.vercel.app" target="_blank" style="color:var(--gold-light);text-decoration:underline;">꿈해몽</a></p>
+    <p>다른 운세 서비스도 확인해보세요:<br>• <a href="https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=contact_page&utm_campaign=fortune_network" target="_blank" rel="noopener" style="color:var(--gold-light);text-decoration:underline;">사주행운</a><br>• <a href="https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=contact_page&utm_campaign=fortune_network" target="_blank" rel="noopener" style="color:var(--gold-light);text-decoration:underline;">꿈해몽</a></p>
   </div>
 </div>
 </div>
@@ -2011,6 +2025,7 @@ async function showResult() {
 
   const rs = document.getElementById('resultSection');
   rs.classList.add('visible');
+  renderBridgeSection();
   // "타로 풀이" 고정 텍스트
   document.getElementById('resultTopic').textContent = `✦ 타로 풀이 — ${selectedTopic}`;
 
@@ -2230,7 +2245,7 @@ async function shareCardKakao() {
     if (!Kakao.isInitialized()) Kakao.init(KAKAO_APP_KEY);
     Kakao.Share.sendDefault({
       objectType: 'text',
-      text: `🔮 별의 타로 — ${selectedTopic}\n\n"${shareSummary}"\n\n${drawnCards.map(c => c.name).join(' · ')}\n\n나도 오늘의 타로 확인하기 👇`,
+      text: `🔮 별의 타로 — ${selectedTopic}\n\n"${shareSummary}"\n\n${drawnCards.map(c => c.name).join(' · ')}\n\n타로 결과 보고 사주행운·꿈해몽도 함께 보기 👇`,
       link: { mobileWebUrl: window.location.href, webUrl: window.location.href }
     });
   } else {
@@ -2347,7 +2362,7 @@ function shareKakao() {
     if (!Kakao.isInitialized()) Kakao.init(KAKAO_APP_KEY);
     Kakao.Share.sendDefault({
       objectType: 'text',
-      text: `🔮 별의 타로 — ${selectedTopic}\n\n${drawnCards.map(c=>`${c.number} ${c.name}`).join('  ·  ')}\n\n${shareSummary ? '"'+shareSummary+'"' : ''}\n\n오늘의 운세를 확인해보세요!`,
+      text: `🔮 별의 타로 — ${selectedTopic}\n\n${drawnCards.map(c=>`${c.number} ${c.name}`).join('  ·  ')}\n\n${shareSummary ? '"'+shareSummary+'"' : ''}\n\n타로 결과 확인 후 사주행운·꿈해몽도 이어서 확인해보세요!`,
       link: {mobileWebUrl: window.location.href, webUrl: window.location.href}
     });
   } else {
@@ -2380,9 +2395,157 @@ function renderGallery() {
     </div>`).join('');
 }
 
+
+const SERVICE_BRIDGES = {
+  '오늘의 운세': [
+    {
+      service: 'sajulucky',
+      label: '사주행운',
+      icon: '🔮',
+      title: '오늘의 큰 흐름을 사주로 한 번 더 확인해보세요',
+      desc: '타로가 오늘의 분위기를 보여줬다면, 사주는 하루 전체의 운 흐름을 더 길게 읽어줍니다.',
+      url: 'https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_today'
+    },
+    {
+      service: 'dreams',
+      label: '꿈해몽',
+      icon: '🌙',
+      title: '최근 떠오른 꿈이 있다면 꿈해몽으로 연결해보세요',
+      desc: '오늘의 감정 흐름이 꿈과 이어질 때가 많습니다. 꿈의 상징을 함께 보면 체류 시간이 더 길어집니다.',
+      url: 'https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_today'
+    }
+  ],
+  '연애운': [
+    {
+      service: 'sajulucky',
+      label: '사주행운',
+      icon: '🔮',
+      title: '연애 타이밍과 관계 흐름을 사주로 이어서 보세요',
+      desc: '타로가 지금의 감정을 보여줬다면, 사주는 관계의 큰 방향과 타이밍을 보는 데 유리합니다.',
+      url: 'https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_love'
+    },
+    {
+      service: 'dreams',
+      label: '꿈해몽',
+      icon: '🌙',
+      title: '좋아하는 사람이 꿈에 나왔다면 꿈해몽도 같이 확인하세요',
+      desc: '연애 관련 꿈은 검색형 유입이 강합니다. 감정 해석과 상징 해석을 함께 묶어보세요.',
+      url: 'https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_love'
+    }
+  ],
+  '직업운': [
+    {
+      service: 'sajulucky',
+      label: '사주행운',
+      icon: '🔮',
+      title: '일과 커리어의 큰 흐름은 사주행운에서 더 길게 보세요',
+      desc: '직업운은 단기 감정보다 장기 흐름이 중요합니다. 사주와 연결하면 재방문 가치가 커집니다.',
+      url: 'https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_career'
+    },
+    {
+      service: 'dreams',
+      label: '꿈해몽',
+      icon: '🌙',
+      title: '회사·시험·합격 꿈이 있었다면 꿈해몽으로 이어보세요',
+      desc: '직업운과 연결되는 꿈 키워드는 검색 확장성이 높아서 광고 수익형 네트워크에 유리합니다.',
+      url: 'https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_career'
+    }
+  ],
+  '금전운': [
+    {
+      service: 'sajulucky',
+      label: '사주행운',
+      icon: '🔮',
+      title: '재물의 큰 방향과 기회를 사주행운에서 이어서 확인하세요',
+      desc: '금전운은 하루 운세보다 흐름 확인이 중요합니다. 사주로 연결하면 체류 시간이 늘어납니다.',
+      url: 'https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_money'
+    },
+    {
+      service: 'dreams',
+      label: '꿈해몽',
+      icon: '🌙',
+      title: '돈·복권·보물 꿈을 꿨다면 꿈해몽도 바로 이어보세요',
+      desc: '금전 상징이 있는 꿈은 클릭 의도가 강합니다. 꿈해몽과 함께 보면 내부 순환이 자연스럽습니다.',
+      url: 'https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_money'
+    }
+  ],
+  '건강운': [
+    {
+      service: 'sajulucky',
+      label: '사주행운',
+      icon: '🔮',
+      title: '컨디션 흐름과 생활 리듬은 사주행운에서 더 길게 체크하세요',
+      desc: '건강운은 루틴과 리듬의 문제로 읽히기 쉬워서 장기 흐름형 서비스 연결이 잘 맞습니다.',
+      url: 'https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_health'
+    },
+    {
+      service: 'dreams',
+      label: '꿈해몽',
+      icon: '🌙',
+      title: '몸 상태가 불안한 꿈을 꿨다면 꿈해몽으로 상징을 확인해보세요',
+      desc: '건강 관련 꿈은 사용자가 추가 해석을 원하기 쉬워서 다음 서비스 클릭률이 높습니다.',
+      url: 'https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_health'
+    }
+  ],
+  '인간관계': [
+    {
+      service: 'sajulucky',
+      label: '사주행운',
+      icon: '🔮',
+      title: '사람과의 궁합 흐름은 사주행운에서 더 넓게 확인하세요',
+      desc: '인간관계 고민은 궁합, 시기, 거리감의 문제와 연결되기 쉬워서 사주 연동이 강합니다.',
+      url: 'https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_relation'
+    },
+    {
+      service: 'dreams',
+      label: '꿈해몽',
+      icon: '🌙',
+      title: '특정 사람이 계속 꿈에 나온다면 꿈해몽도 함께 보세요',
+      desc: '관계형 꿈은 감정 몰입이 높아서 다음 페이지 이동을 만들기 좋습니다.',
+      url: 'https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_relation'
+    }
+  ]
+};
+
+function trackOutboundClick(service, placement) {
+  if (typeof gtag === 'function') {
+    gtag('event', 'cross_service_click', {
+      source_service: 'tarot_hazel',
+      destination_service: service,
+      placement: placement,
+      topic: selectedTopic || 'unknown'
+    });
+  }
+}
+
+function renderBridgeSection() {
+  const wrap = document.getElementById('bridgeSection');
+  if (!wrap) return;
+  const items = SERVICE_BRIDGES[selectedTopic] || SERVICE_BRIDGES['오늘의 운세'];
+  wrap.innerHTML = items.map(item => `
+    <a href="${item.url}" class="bridge-card" target="_blank" rel="noopener" onclick="trackOutboundClick('${item.service}','result_bridge')">
+      <div class="bridge-kicker">${item.icon} ${item.label}</div>
+      <div class="bridge-title">${item.title}</div>
+      <div class="bridge-desc">${item.desc}</div>
+    </a>
+  `).join('');
+}
+
+function bindServiceLinkTracking() {
+  document.querySelectorAll('.js-track-service').forEach(link => {
+    if (link.dataset.bound === 'true') return;
+    link.dataset.bound = 'true';
+    link.addEventListener('click', () => {
+      trackOutboundClick(link.dataset.service || 'unknown', 'footer_link');
+    });
+  });
+}
+
+
 createStars();
 initCards();
 renderGallery();
+bindServiceLinkTracking();
 
 activatePage(getRouteFromLocation());
 </script>
