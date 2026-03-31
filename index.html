@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="pageTitle">별의 타로 — 오늘의 운세 & 타로 카드 완전 가이드</title>
-<meta id="metaDescription" name="description" content="AI가 풀어주는 별의 타로. 오늘의 운세, 연애운, 직업운을 타로 카드로 확인하세요.">
+<title>별의 타로 — 오늘의 운세 & 타로 카드 완전 가이드</title>
+<meta name="description" content="AI가 풀어주는 별의 타로. 오늘의 운세, 연애운, 직업운을 타로 카드로 확인하세요.">
 <!-- SEO META START -->
 <meta name="keywords" content="타로, 타로 운세, 무료 타로, 오늘의 운세, 타로 카드, 연애운, 금전운, tarot, tarot reading">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Tarot Hazel">
-<link id="canonicalLink" rel="canonical" href="https://tarot-hazel-three.vercel.app/">
-<meta id="ogTitle" property="og:title" content="무료 타로 운세 | 오늘의 타로 카드 해석 - Tarot Hazel">
-<meta id="ogDescription" property="og:description" content="무료 타로 카드로 오늘의 운세를 확인해보세요. 연애운, 금전운, 미래 운세까지 간단하고 정확한 타로 해석을 제공합니다.">
-<meta id="ogUrl" property="og:url" content="https://tarot-hazel-three.vercel.app/">
+<link rel="canonical" href="https://tarot-hazel-three.vercel.app/">
+<meta property="og:title" content="무료 타로 운세 | 오늘의 타로 카드 해석 - Tarot Hazel">
+<meta property="og:description" content="무료 타로 카드로 오늘의 운세를 확인해보세요. 연애운, 금전운, 미래 운세까지 간단하고 정확한 타로 해석을 제공합니다.">
+<meta property="og:url" content="https://tarot-hazel-three.vercel.app/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
 <!-- SEO META END -->
@@ -237,17 +237,6 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 .gallery-card-num{font-size:10px;color:var(--muted);text-align:center;}
 .gallery-card-keyword{font-size:10px;color:var(--purple-light);text-align:center;margin-top:2px;}
 
-
-/* ── 서비스 연결 블록 ── */
-.bridge-section{margin-top:18px;display:grid;grid-template-columns:1fr;gap:12px;}
-.bridge-card{display:block;text-decoration:none;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;transition:all 0.3s;position:relative;overflow:hidden;}
-.bridge-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top right,rgba(155,125,232,0.10),transparent 55%);pointer-events:none;}
-.bridge-card:hover{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 8px 24px rgba(0,0,0,0.18);}
-.bridge-kicker{font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;position:relative;z-index:1;}
-.bridge-title{font-size:15px;color:var(--text);line-height:1.6;margin-bottom:6px;position:relative;z-index:1;}
-.bridge-desc{font-size:12px;color:var(--muted);line-height:1.7;position:relative;z-index:1;}
-.bridge-section-title{font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;text-align:center;margin:18px 0 10px;}
-
 /* FOOTER */
 .footer-links{text-align:center;margin-top:40px;padding-top:24px;border-top:1px solid var(--border);}
 .footer-title{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:14px;}
@@ -270,30 +259,14 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
   .gallery-card-art{width:85px;height:145px;}
 }
 </style>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "별의 타로",
-  "url": "https://tarot-hazel-three.vercel.app/",
-  "description": "오늘의 운세, 연애운, 직업운, 금전운 등 타로 카드 해석을 제공하는 무료 웹 서비스",
-  "inLanguage": "ko-KR",
-  "publisher": {
-    "@type": "Organization",
-    "name": "별의 타로",
-    "url": "https://tarot-hazel-three.vercel.app/",
-    "email": "seansaiid@gmail.com"
-  }
-}
-</script>
 </head>
 <body>
 <div class="stars" id="stars"></div>
 
 <nav class="nav-tabs">
-  <div class="nav-tab active" onclick="navigateTo('tarot')">🎴 타로 뽑기</div>
-  <div class="nav-tab" onclick="navigateTo('about')">📖 타로란?</div>
-  <div class="nav-tab" onclick="navigateTo('cards')">✨ 카드 의미</div>
+  <div class="nav-tab active" onclick="showPage(this,'tarot')">🎴 타로 뽑기</div>
+  <div class="nav-tab" onclick="showPage(this,'about')">📖 타로란?</div>
+  <div class="nav-tab" onclick="showPage(this,'cards')">✨ 카드 의미</div>
 </nav>
 
 <!-- ═══ PAGE 1: DRAW ═══ -->
@@ -341,9 +314,6 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
       </div>
     </div>
 
-    <div class="bridge-section-title">운세를 더 이어서 보세요</div>
-    <div class="bridge-section" id="bridgeSection"></div>
-
     <!-- 인스타 공유 카드 버튼 -->
     <button class="share-card-btn" onclick="openShareCard()">
       ✨ 오늘의 타로 공유 카드 만들기
@@ -363,14 +333,14 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
   <div class="footer-links">
     <div class="footer-title">운세 시리즈</div>
     <div class="service-links">
-      <a href="https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=internal_link&utm_campaign=fortune_network" class="service-link js-track-service" data-service="sajulucky" target="_blank" rel="noopener">🔮 사주행운</a>
-      <a href="https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=internal_link&utm_campaign=fortune_network" class="service-link js-track-service" data-service="dreams" target="_blank" rel="noopener">🌙 꿈해몽</a>
+      <a href="https://sajulucky.vercel.app" class="service-link" target="_blank">🔮 사주행운</a>
+      <a href="https://dreams-come-true-ten.vercel.app" class="service-link" target="_blank">🌙 꿈해몽</a>
     </div>
     <div class="legal-links">
-      <span class="legal-link" onclick="navigateTo('about-us')">소개</span>
-      <span class="legal-link" onclick="navigateTo('contact')">문의</span>
-      <span class="legal-link" onclick="navigateTo('privacy')">개인정보</span>
-      <span class="legal-link" onclick="navigateTo('terms')">이용약관</span>
+      <span class="legal-link" onclick="const el=document.getElementById('page-about-us'); if(el) {document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); el.classList.add('active'); window.scrollTo({top:0});}">소개</span>
+      <span class="legal-link" onclick="const el=document.getElementById('page-contact'); if(el) {document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); el.classList.add('active'); window.scrollTo({top:0});}">문의</span>
+      <span class="legal-link" onclick="const el=document.getElementById('page-privacy'); if(el) {document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); el.classList.add('active'); window.scrollTo({top:0});}">개인정보</span>
+      <span class="legal-link" onclick="const el=document.getElementById('page-terms'); if(el) {document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); el.classList.add('active'); window.scrollTo({top:0});}">이용약관</span>
     </div>
   </div>
 </div>
@@ -454,12 +424,49 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
   <div class="footer-links">
     <div class="footer-title">운세 시리즈</div>
     <div class="service-links">
-      <a href="https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=internal_link&utm_campaign=fortune_network" class="service-link js-track-service" data-service="sajulucky" target="_blank" rel="noopener">🔮 사주행운</a>
-      <a href="https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=internal_link&utm_campaign=fortune_network" class="service-link js-track-service" data-service="dreams" target="_blank" rel="noopener">🌙 꿈해몽</a>
+      <a href="https://sajulucky.vercel.app" class="service-link" target="_blank">🔮 사주행운</a>
+      <a href="https://dreams-come-true-ten.vercel.app" class="service-link" target="_blank">🌙 꿈해몽</a>
     </div>
   </div>
 </div>
 </div>
+
+
+<!-- SEO CONTENT START -->
+<div class="info-card">
+  <h3>🌟 오늘의 타로 보는 방법</h3>
+  <p>오늘의 타로는 하루의 흐름을 간단하게 확인할 수 있는 가장 쉬운 방법입니다. 카드 한 장 또는 세 장을 뽑아 현재 상황과 앞으로의 방향을 해석할 수 있습니다.</p>
+  <p>타로는 미래를 확정하는 것이 아니라 선택을 돕는 참고 도구입니다.</p>
+</div>
+
+<div class="info-card">
+  <h3>💕 연애운 타로 해석 방법</h3>
+  <p>연애운 타로는 관계 흐름과 감정을 이해하는 데 도움을 줍니다.</p>
+</div>
+
+<div class="info-card">
+  <h3>💰 금전운 타로 해석</h3>
+  <p>금전 흐름과 소비, 기회를 해석할 수 있습니다.</p>
+</div>
+
+<div class="info-card">
+  <h3>💼 직업운 타로 해석</h3>
+  <p>업무 상황과 이직 가능성을 확인할 수 있습니다.</p>
+</div>
+
+<div class="info-card">
+  <h3>🔗 타로, 사주, 꿈해몽의 차이</h3>
+  <p>타로는 현재, 사주는 인생 흐름, 꿈해몽은 무의식 해석입니다.</p>
+</div>
+
+<div class="info-card">
+  <h3>🔮 함께 보면 좋은 운세 서비스</h3>
+  <p>
+  👉 <a href="https://sajulucky.vercel.app" target="_blank">사주행운</a><br>
+  👉 <a href="https://dreams-come-true-ten.vercel.app" target="_blank">꿈해몽</a>
+  </p>
+</div>
+<!-- SEO CONTENT END -->
 
 <!-- ═══ PAGE 3: CARDS ═══ -->
 <div class="page" id="page-cards">
@@ -474,8 +481,8 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
   <div class="footer-links">
     <div class="footer-title">운세 시리즈</div>
     <div class="service-links">
-      <a href="https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=internal_link&utm_campaign=fortune_network" class="service-link js-track-service" data-service="sajulucky" target="_blank" rel="noopener">🔮 사주행운</a>
-      <a href="https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=internal_link&utm_campaign=fortune_network" class="service-link js-track-service" data-service="dreams" target="_blank" rel="noopener">🌙 꿈해몽</a>
+      <a href="https://sajulucky.vercel.app" class="service-link" target="_blank">🔮 사주행운</a>
+      <a href="https://dreams-come-true-ten.vercel.app" class="service-link" target="_blank">🌙 꿈해몽</a>
     </div>
   </div>
 </div>
@@ -485,7 +492,7 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 <div class="page" id="page-privacy">
 <div class="container-wide">
   <div class="info-hero">
-    <button class="back-btn" onclick="navigateTo('tarot')">← 돌아가기</button>
+    <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
     <div class="logo">★ Privacy Policy ★</div>
     <h2>개인정보 처리방침</h2>
     <p>최종 업데이트: 2026년 3월</p>
@@ -493,22 +500,22 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
   <div class="divider"><span class="divider-star">✦</span></div>
   <div class="reading-box">
     <h3>1. 수집하는 정보</h3>
-    <p>별의 타로("본 웹사이트")는 다음과 같은 정보를 수집할 수 있습니다:<br>• 자동 수집: IP 주소, 브라우저 종류, 방문 시간, 페이지 이동 경로<br>• Google Analytics를 통한 사용자 행동 분석<br>• 카카오톡 공유 기능 실행 시 필요한 최소한의 정보</p>
+    <p>별의 타로("본 웹사이트")는 다음과 같은 정보를 수집할 수 있습니다:<br>• 자동 수집: IP 주소, 브라우저 종류, 방문 시간, 페이지 이동 경로<br>• Google Analytics를 통한 사용자 행동 분석<br>• 카카오톡 공유 시 필요한 최소한의 정보</p>
     
     <h3>2. 쿠키 사용</h3>
-    <p>본 웹사이트는 Google Analytics 및 향후 적용될 Google AdSense 등의 서비스를 위해 쿠키를 사용할 수 있습니다. 사용자는 브라우저 설정에서 쿠키를 비활성화하거나 삭제할 수 있습니다.</p>
+    <p>본 웹사이트는 Google AdSense, Google Analytics 등의 서비스를 위해 쿠키를 사용합니다. 사용자는 브라우저 설정에서 쿠키를 비활성화할 수 있습니다.</p>
     
     <h3>3. 정보 사용</h3>
-    <p>수집된 정보는 다음 목적으로만 사용됩니다:<br>• 웹사이트 서비스 제공 및 개선<br>• 사용자 경험 분석<br>• 광고 운영 및 광고 성과 측정<br>• 통계 및 분석</p>
+    <p>수집된 정보는 다음 목적으로만 사용됩니다:<br>• 웹사이트 서비스 제공 및 개선<br>• 사용자 경험 분석<br>• 광고 맞춤 제공<br>• 통계 및 분석</p>
     
     <h3>4. 정보 보호</h3>
-    <p>본 웹사이트는 SSL 암호화를 통해 데이터 전송 보안을 보장합니다. 법령상 요구되는 경우를 제외하고 개인정보를 임의로 판매하거나 외부에 제공하지 않습니다.</p>
+    <p>본 웹사이트는 SSL 암호화를 통해 데이터 전송 보안을 보장합니다. 개인정보는 제3자와 공유되지 않습니다.</p>
     
     <h3>5. 제3자 서비스</h3>
     <p>본 웹사이트는 다음 제3자 서비스를 사용합니다:<br>• Google Analytics: 사용자 행동 분석<br>• Google AdSense: 광고 게재<br>• Kakao Share: 콘텐츠 공유<br>각 서비스의 개인정보 처리방침은 해당 회사 웹사이트를 참고하세요.</p>
     
     <h3>6. 연락처</h3>
-    <p>개인정보 관련 문의: seansaiid@gmail.com 으로 문의하시기 바랍니다.</p>
+    <p>개인정보 관련 문의: 아래 연락처로 문의하시기 바랍니다.</p>
   </div>
 </div>
 </div>
@@ -517,7 +524,7 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 <div class="page" id="page-terms">
 <div class="container-wide">
   <div class="info-hero">
-    <button class="back-btn" onclick="navigateTo('tarot')">← 돌아가기</button>
+    <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
     <div class="logo">★ Terms of Service ★</div>
     <h2>이용약관</h2>
     <p>최종 업데이트: 2026년 3월</p>
@@ -546,25 +553,25 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 <div class="page" id="page-contact">
 <div class="container-wide">
   <div class="info-hero">
-    <button class="back-btn" onclick="navigateTo('tarot')">← 돌아가기</button>
+    <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
     <div class="logo">★ Contact Us ★</div>
     <h2>문의하기</h2>
-    <p>서비스 문의, 제휴 문의, 개인정보 관련 문의를 받고 있습니다.</p>
+    <p>궁금한 사항이 있으신가요?</p>
   </div>
   <div class="divider"><span class="divider-star">✦</span></div>
   <div class="reading-box">
     <h3>📧 이메일 문의</h3>
-    <p>문의 사항은 아래 이메일로 보내주세요.<br><a href="mailto:seansaiid@gmail.com" style="color:var(--gold-light);text-decoration:underline;">seansaiid@gmail.com</a></p>
+    <p>문의 사항은 GitHub Issues를 통해 문의해주세요.<br><a href="https://github.com/seansaiid-creator/tarot/issues" target="_blank" style="color:var(--gold-light);text-decoration:underline;">GitHub Issues 링크</a></p>
     
     <h3>💬 자주 묻는 질문</h3>
     <p><strong>Q: 타로 운세가 정확한가요?</strong><br>A: 타로는 오락 목적이며, 현재 상황을 성찰하는 도구입니다.</p>
     
-    <p><strong>Q: 광고가 있나요?</strong><br>A: 현재 광고 최적화를 준비 중이며, Google AdSense 정책에 맞춰 광고가 표시될 예정입니다.</p>
+    <p><strong>Q: 광고가 있나요?</strong><br>A: 네, Google AdSense 광고가 표시됩니다.</p>
     
-    <p><strong>Q: 개인정보는 안전한가요?</strong><br>A: 서비스 개선과 통계 분석을 위해 Google Analytics를 사용할 수 있으며, 향후 Google AdSense 운영 시 쿠키 기반 광고 기술이 적용될 수 있습니다.</p>
+    <p><strong>Q: 개인정보는 안전한가요?</strong><br>A: 네, 개인정보는 수집되지 않으며 Google Analytics만 사용합니다.</p>
     
     <h3>🔗 관련 서비스</h3>
-    <p>다른 운세 서비스도 확인해보세요:<br>• <a href="https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=contact_page&utm_campaign=fortune_network" target="_blank" rel="noopener" style="color:var(--gold-light);text-decoration:underline;">사주행운</a><br>• <a href="https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=contact_page&utm_campaign=fortune_network" target="_blank" rel="noopener" style="color:var(--gold-light);text-decoration:underline;">꿈해몽</a></p>
+    <p>다른 운세 서비스도 확인해보세요:<br>• <a href="https://sajulucky.vercel.app" target="_blank" style="color:var(--gold-light);text-decoration:underline;">사주행운</a><br>• <a href="https://dreams-come-true-ten.vercel.app" target="_blank" style="color:var(--gold-light);text-decoration:underline;">꿈해몽</a></p>
   </div>
 </div>
 </div>
@@ -573,7 +580,7 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
 <div class="page" id="page-about-us">
 <div class="container-wide">
   <div class="info-hero">
-    <button class="back-btn" onclick="navigateTo('tarot')">← 돌아가기</button>
+    <button class="back-btn" onclick="document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-tarot').classList.add('active'); window.scrollTo({top:0});">← 돌아가기</button>
     <div class="logo">★ About Us ★</div>
     <h2>별의 타로 소개</h2>
     <p>AI가 풀어주는 신비로운 타로의 세계</p>
@@ -581,22 +588,19 @@ h1{font-size:28px;font-weight:300;color:var(--accent);letter-spacing:2px;line-he
   <div class="divider"><span class="divider-star">✦</span></div>
   <div class="reading-box">
     <h3>별의 타로란?</h3>
-    <p>별의 타로는 Google Gemini AI를 활용하여 사용자의 운세 해석 경험을 제공하는 웹 서비스입니다. 사용자는 메이저 아르카나 22장을 기반으로 오늘의 흐름과 감정, 관계, 선택의 방향성을 가볍게 확인할 수 있습니다.</p>
+    <p>별의 타로는 Google Gemini AI를 활용하여 사용자의 운세를 풀어주는 웹 서비스입니다. 메이저 아르카나 22장과 마이너 아르카나 56장, 총 78장의 타로 카드로 당신의 오늘을 점쳐보세요.</p>
     
     <h3>🎯 주요 기능</h3>
-    <p>• 🎴 3장의 카드를 뽑아 과거, 현재, 미래를 알아봅니다<br>• 🤖 Google Gemini AI가 상세한 해석형 풀이를 제공합니다<br>• 📱 카카오톡으로 운세를 공유할 수 있습니다<br>• 🖼️ 인스타그램 스토리용 공유 카드를 만들 수 있습니다<br>• 📚 타로의 역사와 각 카드의 의미를 배울 수 있습니다<br>• 🔗 사주행운, 꿈해몽 서비스와 함께 운세 시리즈로 이용할 수 있습니다</p>
+    <p>• 🎴 3장의 카드를 뽑아 과거, 현재, 미래를 알아봅니다<br>• 🤖 Google Gemini AI가 500자 이상의 상세한 풀이를 제공합니다<br>• 📱 카카오톡으로 운세를 공유할 수 있습니다<br>• 🖼️ 인스타그램 스토리용 공유 카드를 만들 수 있습니다<br>• 📚 타로의 역사와 각 카드의 의미를 배울 수 있습니다</p>
     
     <h3>✨ 기술 스택</h3>
-    <p>• 프론트엔드: 순수 바닐라 JavaScript (프레임워크 없음)<br>• AI: Google Gemini API 기반 해석 로직<br>• 배포: Vercel<br>• 공유: Kakao SDK, Html2Canvas</p>
+    <p>• 프론트엔드: 순수 바닐라 JavaScript (프레임워크 없음)<br>• AI: Google Gemini API (gemini-pro)<br>• 배포: Vercel<br>• 공유: Kakao SDK, Html2Canvas</p>
     
     <h3>🎓 타로에 대해 배우세요</h3>
     <p>상단 메뉴의 "타로란?" 페이지에서 타로의 역사, 78장의 카드 구성, 각 슈트의 의미 등을 배울 수 있습니다.</p>
     
-    <h3>💡 운영 안내</h3>
-    <p>별의 타로는 사용자가 짧고 편하게 운세 콘텐츠를 즐길 수 있도록 기획된 웹 서비스입니다. 서비스는 광고 수익 기반 운영을 목표로 하며, 사용자 경험을 해치지 않는 선에서 정보성 콘텐츠와 운세 경험을 함께 제공합니다.</p>
-    
     <h3>💡 마지막 말씀</h3>
-    <p>타로는 미래를 정확히 예측하는 도구가 아닙니다. 현재 상황을 성찰하고 새로운 관점을 제시하는 오락·해석형 콘텐츠입니다. 중요한 판단은 언제나 사용자의 선택과 책임 아래 이루어져야 합니다.</p>
+    <p>타로는 미래를 정확히 예측하는 도구가 아닙니다. 현재 상황을 성찰하고 새로운 관점을 제시하는 영적 도구일 뿐입니다. 당신의 선택이 가장 중요합니다.</p>
   </div>
 </div>
 </div>
@@ -1794,113 +1798,13 @@ let selectedTopic = '오늘의 운세';
 let drawnCards = [];
 let isDrawn = false;
 
-const BASE_URL = 'https://tarot-hazel-three.vercel.app';
-const ROUTES = {
-  'tarot': {
-    path: '/',
-    pageId: 'page-tarot',
-    title: '별의 타로 — 오늘의 운세 & 타로 카드 완전 가이드',
-    description: 'AI가 풀어주는 별의 타로. 오늘의 운세, 연애운, 직업운을 타로 카드로 확인하세요.',
-    ogTitle: '무료 타로 운세 | 오늘의 타로 카드 해석 - Tarot Hazel',
-    ogDescription: '무료 타로 카드로 오늘의 운세를 확인해보세요. 연애운, 금전운, 미래 운세까지 간단하고 정확한 타로 해석을 제공합니다.'
-  },
-  'about': {
-    path: '/about-tarot',
-    pageId: 'page-about',
-    title: '타로란 무엇인가요? | 별의 타로',
-    description: '타로의 기원, 역사, 78장 구성, 메이저 아르카나와 마이너 아르카나의 차이를 쉽게 알아보세요.',
-    ogTitle: '타로란 무엇인가요? | 별의 타로',
-    ogDescription: '타로의 역사와 구조, 활용법을 쉽게 설명하는 별의 타로 가이드 페이지입니다.'
-  },
-  'cards': {
-    path: '/card-meanings',
-    pageId: 'page-cards',
-    title: '메이저 아르카나 22장 카드 의미 | 별의 타로',
-    description: '메이저 아르카나 22장의 상징과 의미를 한눈에 확인해보세요.',
-    ogTitle: '메이저 아르카나 22장 카드 의미 | 별의 타로',
-    ogDescription: '타로 카드별 상징과 핵심 키워드를 정리한 별의 타로 카드 의미 페이지입니다.'
-  },
-  'about-us': {
-    path: '/about-us',
-    pageId: 'page-about-us',
-    title: '별의 타로 소개 | 별의 타로',
-    description: '별의 타로 서비스 소개, 제공 방식, 운영 목적과 활용 방법을 확인해보세요.',
-    ogTitle: '별의 타로 소개 | 별의 타로',
-    ogDescription: 'AI 기반 타로 서비스 별의 타로의 특징과 운영 목적을 소개합니다.'
-  },
-  'contact': {
-    path: '/contact',
-    pageId: 'page-contact',
-    title: '문의하기 | 별의 타로',
-    description: '별의 타로 서비스 문의, 연락처, 자주 묻는 질문을 확인해보세요.',
-    ogTitle: '문의하기 | 별의 타로',
-    ogDescription: '별의 타로 서비스 문의 이메일과 FAQ를 확인할 수 있습니다.'
-  },
-  'privacy': {
-    path: '/privacy-policy',
-    pageId: 'page-privacy',
-    title: '개인정보 처리방침 | 별의 타로',
-    description: '별의 타로의 개인정보 처리방침, 쿠키, Google Analytics, 광고 관련 고지를 확인하세요.',
-    ogTitle: '개인정보 처리방침 | 별의 타로',
-    ogDescription: '별의 타로 서비스의 개인정보 처리방침과 쿠키 및 광고 정책 안내입니다.'
-  },
-  'terms': {
-    path: '/terms',
-    pageId: 'page-terms',
-    title: '이용약관 | 별의 타로',
-    description: '별의 타로 서비스 이용약관과 면책사항을 확인하세요.',
-    ogTitle: '이용약관 | 별의 타로',
-    ogDescription: '별의 타로 서비스 이용약관과 면책사항 안내입니다.'
-  }
-};
-const PATH_TO_ROUTE = Object.fromEntries(Object.entries(ROUTES).map(([key, value]) => [value.path, key]));
-
-function setSeoMeta(routeKey) {
-  const route = ROUTES[routeKey] || ROUTES.tarot;
-  const fullUrl = BASE_URL + route.path;
-  document.title = route.title;
-  const metaDescription = document.getElementById('metaDescription');
-  const canonicalLink = document.getElementById('canonicalLink');
-  const ogTitle = document.getElementById('ogTitle');
-  const ogDescription = document.getElementById('ogDescription');
-  const ogUrl = document.getElementById('ogUrl');
-  if (metaDescription) metaDescription.setAttribute('content', route.description);
-  if (canonicalLink) canonicalLink.setAttribute('href', fullUrl);
-  if (ogTitle) ogTitle.setAttribute('content', route.ogTitle);
-  if (ogDescription) ogDescription.setAttribute('content', route.ogDescription);
-  if (ogUrl) ogUrl.setAttribute('content', fullUrl);
-}
-
-function activatePage(name) {
-  const route = ROUTES[name] || ROUTES.tarot;
+function showPage(el, name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  const page = document.getElementById(route.pageId);
-  if (page) page.classList.add('active');
-  const navTab = Array.from(document.querySelectorAll('.nav-tab')).find(tab => tab.getAttribute('onclick') === `navigateTo('${name}')`);
-  if (navTab) navTab.classList.add('active');
-  setSeoMeta(name);
+  document.getElementById('page-' + name).classList.add('active');
+  el.classList.add('active');
   window.scrollTo({top:0});
 }
-
-function navigateTo(name, replaceState = false) {
-  const route = ROUTES[name] || ROUTES.tarot;
-  const method = replaceState ? 'replaceState' : 'pushState';
-  window.history[method]({ route: name }, '', route.path);
-  activatePage(name);
-}
-
-function getRouteFromLocation() {
-  return PATH_TO_ROUTE[window.location.pathname] || 'tarot';
-}
-
-function showPage(el, name) {
-  navigateTo(name);
-}
-
-window.addEventListener('popstate', () => {
-  activatePage(getRouteFromLocation());
-});
 
 function createStars() {
   const c = document.getElementById('stars');
@@ -2041,7 +1945,6 @@ async function showResult() {
 
   const rs = document.getElementById('resultSection');
   rs.classList.add('visible');
-  renderBridgeSection();
   // "타로 풀이" 고정 텍스트
   document.getElementById('resultTopic').textContent = `✦ 타로 풀이 — ${selectedTopic}`;
 
@@ -2261,7 +2164,7 @@ async function shareCardKakao() {
     if (!Kakao.isInitialized()) Kakao.init(KAKAO_APP_KEY);
     Kakao.Share.sendDefault({
       objectType: 'text',
-      text: `🔮 별의 타로 — ${selectedTopic}\n\n"${shareSummary}"\n\n${drawnCards.map(c => c.name).join(' · ')}\n\n타로 결과 보고 사주행운·꿈해몽도 함께 보기 👇`,
+      text: `🔮 별의 타로 — ${selectedTopic}\n\n"${shareSummary}"\n\n${drawnCards.map(c => c.name).join(' · ')}\n\n나도 오늘의 타로 확인하기 👇`,
       link: { mobileWebUrl: window.location.href, webUrl: window.location.href }
     });
   } else {
@@ -2378,7 +2281,7 @@ function shareKakao() {
     if (!Kakao.isInitialized()) Kakao.init(KAKAO_APP_KEY);
     Kakao.Share.sendDefault({
       objectType: 'text',
-      text: `🔮 별의 타로 — ${selectedTopic}\n\n${drawnCards.map(c=>`${c.number} ${c.name}`).join('  ·  ')}\n\n${shareSummary ? '"'+shareSummary+'"' : ''}\n\n타로 결과 확인 후 사주행운·꿈해몽도 이어서 확인해보세요!`,
+      text: `🔮 별의 타로 — ${selectedTopic}\n\n${drawnCards.map(c=>`${c.number} ${c.name}`).join('  ·  ')}\n\n${shareSummary ? '"'+shareSummary+'"' : ''}\n\n오늘의 운세를 확인해보세요!`,
       link: {mobileWebUrl: window.location.href, webUrl: window.location.href}
     });
   } else {
@@ -2411,159 +2314,9 @@ function renderGallery() {
     </div>`).join('');
 }
 
-
-const SERVICE_BRIDGES = {
-  '오늘의 운세': [
-    {
-      service: 'sajulucky',
-      label: '사주행운',
-      icon: '🔮',
-      title: '오늘의 큰 흐름을 사주로 한 번 더 확인해보세요',
-      desc: '타로가 오늘의 분위기를 보여줬다면, 사주는 하루 전체의 운 흐름을 더 길게 읽어줍니다.',
-      url: 'https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_today'
-    },
-    {
-      service: 'dreams',
-      label: '꿈해몽',
-      icon: '🌙',
-      title: '최근 떠오른 꿈이 있다면 꿈해몽으로 연결해보세요',
-      desc: '오늘의 감정 흐름이 꿈과 이어질 때가 많습니다. 꿈의 상징을 함께 보면 체류 시간이 더 길어집니다.',
-      url: 'https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_today'
-    }
-  ],
-  '연애운': [
-    {
-      service: 'sajulucky',
-      label: '사주행운',
-      icon: '🔮',
-      title: '연애 타이밍과 관계 흐름을 사주로 이어서 보세요',
-      desc: '타로가 지금의 감정을 보여줬다면, 사주는 관계의 큰 방향과 타이밍을 보는 데 유리합니다.',
-      url: 'https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_love'
-    },
-    {
-      service: 'dreams',
-      label: '꿈해몽',
-      icon: '🌙',
-      title: '좋아하는 사람이 꿈에 나왔다면 꿈해몽도 같이 확인하세요',
-      desc: '연애 관련 꿈은 검색형 유입이 강합니다. 감정 해석과 상징 해석을 함께 묶어보세요.',
-      url: 'https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_love'
-    }
-  ],
-  '직업운': [
-    {
-      service: 'sajulucky',
-      label: '사주행운',
-      icon: '🔮',
-      title: '일과 커리어의 큰 흐름은 사주행운에서 더 길게 보세요',
-      desc: '직업운은 단기 감정보다 장기 흐름이 중요합니다. 사주와 연결하면 재방문 가치가 커집니다.',
-      url: 'https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_career'
-    },
-    {
-      service: 'dreams',
-      label: '꿈해몽',
-      icon: '🌙',
-      title: '회사·시험·합격 꿈이 있었다면 꿈해몽으로 이어보세요',
-      desc: '직업운과 연결되는 꿈 키워드는 검색 확장성이 높아서 광고 수익형 네트워크에 유리합니다.',
-      url: 'https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_career'
-    }
-  ],
-  '금전운': [
-    {
-      service: 'sajulucky',
-      label: '사주행운',
-      icon: '🔮',
-      title: '재물의 큰 방향과 기회를 사주행운에서 이어서 확인하세요',
-      desc: '금전운은 하루 운세보다 흐름 확인이 중요합니다. 사주로 연결하면 체류 시간이 늘어납니다.',
-      url: 'https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_money'
-    },
-    {
-      service: 'dreams',
-      label: '꿈해몽',
-      icon: '🌙',
-      title: '돈·복권·보물 꿈을 꿨다면 꿈해몽도 바로 이어보세요',
-      desc: '금전 상징이 있는 꿈은 클릭 의도가 강합니다. 꿈해몽과 함께 보면 내부 순환이 자연스럽습니다.',
-      url: 'https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_money'
-    }
-  ],
-  '건강운': [
-    {
-      service: 'sajulucky',
-      label: '사주행운',
-      icon: '🔮',
-      title: '컨디션 흐름과 생활 리듬은 사주행운에서 더 길게 체크하세요',
-      desc: '건강운은 루틴과 리듬의 문제로 읽히기 쉬워서 장기 흐름형 서비스 연결이 잘 맞습니다.',
-      url: 'https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_health'
-    },
-    {
-      service: 'dreams',
-      label: '꿈해몽',
-      icon: '🌙',
-      title: '몸 상태가 불안한 꿈을 꿨다면 꿈해몽으로 상징을 확인해보세요',
-      desc: '건강 관련 꿈은 사용자가 추가 해석을 원하기 쉬워서 다음 서비스 클릭률이 높습니다.',
-      url: 'https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_health'
-    }
-  ],
-  '인간관계': [
-    {
-      service: 'sajulucky',
-      label: '사주행운',
-      icon: '🔮',
-      title: '사람과의 궁합 흐름은 사주행운에서 더 넓게 확인하세요',
-      desc: '인간관계 고민은 궁합, 시기, 거리감의 문제와 연결되기 쉬워서 사주 연동이 강합니다.',
-      url: 'https://sajulucky.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_relation'
-    },
-    {
-      service: 'dreams',
-      label: '꿈해몽',
-      icon: '🌙',
-      title: '특정 사람이 계속 꿈에 나온다면 꿈해몽도 함께 보세요',
-      desc: '관계형 꿈은 감정 몰입이 높아서 다음 페이지 이동을 만들기 좋습니다.',
-      url: 'https://dreams-come-true-ten.vercel.app/?utm_source=tarot_hazel&utm_medium=result_cta&utm_campaign=fortune_network_relation'
-    }
-  ]
-};
-
-function trackOutboundClick(service, placement) {
-  if (typeof gtag === 'function') {
-    gtag('event', 'cross_service_click', {
-      source_service: 'tarot_hazel',
-      destination_service: service,
-      placement: placement,
-      topic: selectedTopic || 'unknown'
-    });
-  }
-}
-
-function renderBridgeSection() {
-  const wrap = document.getElementById('bridgeSection');
-  if (!wrap) return;
-  const items = SERVICE_BRIDGES[selectedTopic] || SERVICE_BRIDGES['오늘의 운세'];
-  wrap.innerHTML = items.map(item => `
-    <a href="${item.url}" class="bridge-card" target="_blank" rel="noopener" onclick="trackOutboundClick('${item.service}','result_bridge')">
-      <div class="bridge-kicker">${item.icon} ${item.label}</div>
-      <div class="bridge-title">${item.title}</div>
-      <div class="bridge-desc">${item.desc}</div>
-    </a>
-  `).join('');
-}
-
-function bindServiceLinkTracking() {
-  document.querySelectorAll('.js-track-service').forEach(link => {
-    if (link.dataset.bound === 'true') return;
-    link.dataset.bound = 'true';
-    link.addEventListener('click', () => {
-      trackOutboundClick(link.dataset.service || 'unknown', 'footer_link');
-    });
-  });
-}
-
-
 createStars();
 initCards();
 renderGallery();
-bindServiceLinkTracking();
-
-activatePage(getRouteFromLocation());
 </script>
 </body>
 </html>
