@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/about-tarot", "destination": "/" },
+    { "source": "/card-meanings", "destination": "/" },
+    { "source": "/about-us", "destination": "/" },
+    { "source": "/contact", "destination": "/" },
+    { "source": "/privacy-policy", "destination": "/" },
+    { "source": "/terms", "destination": "/" }
+  ]
+}
